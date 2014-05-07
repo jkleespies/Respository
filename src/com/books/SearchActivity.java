@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -37,12 +38,12 @@ public class SearchActivity extends Activity {
 			
 			@Override
         	public void onClick(View v){
-				Intent i = new Intent(getApplicationContext(), SearchResultActivity.class);
-				startActivity(i);
-//				Intent i = new Intent(getApplicationContext(), ScannerActivity.class);
-//				startActivityForResult(i, 0);
+				EditText search_keyword = (EditText)findViewById(R.id.searchActivity_input_field);
+				String search_phrase = search_keyword.getText().toString();
 				
-				Log.d("sucheButton", "wirdaufgerufen");
+				Intent i = new Intent(getApplicationContext(), SearchResultActivity.class);
+				i.putExtra("searchfor", search_phrase);
+				startActivity(i);
 			}
 		});
 
@@ -59,10 +60,15 @@ public class SearchActivity extends Activity {
 	    	
 			String returnValue = data.getExtras().getString("scanresult");
 	    	
-	    	TextView tv1 = (TextView)findViewById( R.id.searchActivity_keyword);
-	    	tv1.setText(returnValue);
+	    	//TextView tv1 = (TextView)findViewById( R.id.searchActivity_keyword);
+	    	//tv1.setText(returnValue);
 	    	
+			
+	    	Intent i = new Intent(getApplicationContext(), SearchResultActivity.class);
 	    	
+	    	i.putExtra("searchfor", returnValue);
+	    	
+	    	startActivity(i);
 	    }
 	 
 

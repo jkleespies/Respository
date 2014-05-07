@@ -34,8 +34,8 @@ public class SearchResultActivity extends ListActivity {
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_INDUSTRYIDENTIFIER = "industryIdentifiers";
 	private static final String TAG_TYPE = "type";
-	private static final String TAG_ISBN = "ISBN_13";
-	private static final String TAG_IDENTIFIER = "identifier";
+	//private static final String TAG_ISBN = "ISBN_13";
+	//private static final String TAG_IDENTIFIER = "identifier";
  	
 	// contacts JSONArray
 	JSONArray items = null;
@@ -43,6 +43,7 @@ public class SearchResultActivity extends ListActivity {
 	// Hashmap for ListView
 	ArrayList<HashMap<String, String>> contactList;
 	public String url;
+	public String search_phrase;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,10 +52,21 @@ public class SearchResultActivity extends ListActivity {
 
 		contactList = new ArrayList<HashMap<String, String>>();	     
 
-		EditText searchKeyword = (EditText)findViewById(R.id.SearchResultActivity_Suche);
+		//EditText searchKeyword = (EditText)findViewById(R.id.SearchResultActivity_Suche);
+		
+		Intent i = getIntent();
+			String search_phrase = i.getExtras().getString("searchfor");
 		
 		// URL to get contacts JSON
-		  url = "https://www.googleapis.com/books/v1/volumes?q=der%20gute%20mensch%20von%20sezuan%20brecht";
+		//url = "https://www.googleapis.com/books/v1/volumes?q=der%20gute%20mensch%20von%20sezuan%20brecht";
+		String searchurl = "https://www.googleapis.com/books/v1/volumes?q="+ search_phrase;
+		url = searchurl.replaceAll("[ ]", "%20");
+		//String authors = author.replace("," , ", ");			
+		
+		Log.d("fail-url", url);
+		
+		TextView tv = (TextView)findViewById(R.id.SearchResultActivity_Suche);
+		tv.setText(search_phrase);
 		
 		ListView lv = getListView();
 		
@@ -71,8 +83,8 @@ public class SearchResultActivity extends ListActivity {
 						.getText().toString();
 				String description = ((TextView) view.findViewById(R.id.SearchResultActivity_Inhalt))
 						.getText().toString();		
-				String isbn = ((TextView) view.findViewById(R.id.SearchResultActivity_ISBN))
-						.getText().toString();	
+//				String isbn = ((TextView) view.findViewById(R.id.SearchResultActivity_ISBN))
+//						.getText().toString();	
 
 				// Starting single contact activity
 				Intent in = new Intent(getApplicationContext(),
@@ -80,7 +92,7 @@ public class SearchResultActivity extends ListActivity {
 				in.putExtra(TAG_AUTHORS, authors);
 				in.putExtra(TAG_TITLE, title);
 				in.putExtra(TAG_DESCRIPTION, description);
-				in.putExtra(TAG_IDENTIFIER, isbn);
+//				in.putExtra(TAG_IDENTIFIER, isbn);
 				startActivity(in);
 			}
 		});
@@ -128,22 +140,25 @@ public class SearchResultActivity extends ListActivity {
 						JSONObject it = items.getJSONObject(i);										
 						
 						JSONObject volumeInfo = it.getJSONObject(TAG_VOLUMEINFO);
-						String author = volumeInfo.getString("authors").replaceAll("[^a-zA-Z, ]", "");
-						String authors = author.replace("," , ", ");			
+//						String author = volumeInfo.getString("authors").replaceAll("[^a-zA-Z, ]", "");
+//						String authors = author.replace("," , ", ");
+						
+						String authors = volumeInfo.getString("authors").replace(",", ", ");
+						
 						String title = volumeInfo.getString(TAG_TITLE);	
 						
-						JSONObject industryIdentifiers = it.getJSONObject(TAG_INDUSTRYIDENTIFIER);
-						String isbn = industryIdentifiers.getString(TAG_IDENTIFIER);
+//						JSONObject industryIdentifiers = it.getJSONObject(TAG_INDUSTRYIDENTIFIER);
+//						String isbn = industryIdentifiers.getString(TAG_IDENTIFIER);
 						
-						if (industryIdentifiers.has(TAG_TYPE) && equals("TAG_ISBN")) {
-							isbn = industryIdentifiers.getString(TAG_IDENTIFIER);
-						}
-						else
-						{
-							
-						}
-							isbn = industryIdentifiers.getString(TAG_IDENTIFIER); 
-						
+//						if (industryIdentifiers.has(TAG_TYPE) && equals("TAG_ISBN")) {
+//							isbn = industryIdentifiers.getString(TAG_IDENTIFIER);
+//						}
+//						else
+//						{
+//							
+//						}
+//							isbn = industryIdentifiers.getString(TAG_IDENTIFIER); 
+//						
 						String description = "";
 						if (volumeInfo.has(TAG_DESCRIPTION) == true) {
 							description = volumeInfo.getString(TAG_DESCRIPTION);
@@ -185,7 +200,7 @@ public class SearchResultActivity extends ListActivity {
 			/*** Updating parsed JSON data into ListView */
 			ListAdapter adapter = new SimpleAdapter(
 					SearchResultActivity.this, contactList,
-					R.layout.activity_search_result_listitem, new String[] { TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER }, new int[] { R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN});
+					R.layout.activity_search_result_listitem, new String[] { TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION}, new int[] { R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt});
 
 			setListAdapter(adapter);
 		}

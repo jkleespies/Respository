@@ -6,29 +6,26 @@
     android:orientation="vertical" >
 
     <!--	Suche EditText und Suchergebnisliste ListView	-->
-    <ListView
+    <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="396sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/SearchResultActivity_Suche"
         android:divider="#b5b5b5"
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector" >
 
     </ListView>
 
-    <EditText
+    <TextView
         android:id="@+id/SearchResultActivity_Suche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@android:id/list"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="der%20gute%20mensch%20von%20sezuan%20brecht" >
-    </EditText>
+        android:text="TextView" />
 
 </RelativeLayout>
