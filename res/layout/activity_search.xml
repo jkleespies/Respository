@@ -4,36 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mybook.SearchActivity"
-    tools:ignore="MergeRootFrame" >
-
-    <Button
-        android:id="@+id/searchActivity_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="32dp"
-        android:layout_marginTop="48dp"
-        android:text="Suchen" />
-
+    tools:ignore="MergeRootFrame" > 
+  
     <Button
         android:id="@+id/searchActivity_scanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/searchActivity_search"
-        android:layout_alignBottom="@+id/searchActivity_search"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="51dp"
-        android:text="Scanner" />
-
-    <TextView
-        android:id="@+id/searchActivity_keyword"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="56dp"
+        android:text="Scanner"
+        android:width="150dp" /> 
+  
+    <Button
+        android:id="@+id/searchActivity_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/searchActivity_search"
-        android:layout_marginTop="30dp"
-        android:text="TextView" />
-
+        android:layout_alignLeft="@+id/searchActivity_scanner"
+        android:layout_below="@+id/searchActivity_scanner"
+        android:layout_marginTop="130dp"
+        android:text="Suchen"
+        android:width="150dp" /> 
+  
+    <EditText
+        android:id="@+id/searchActivity_input_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchActivity_scanner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:ems="10"
+        android:width="300dp" > 
+  
+        <requestFocus /> 
+    </EditText> 
+  
 </RelativeLayout>

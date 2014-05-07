@@ -107,9 +107,9 @@ int id none 0x7f050000
 int id normal 0x7f050001
 int id satellite 0x7f050002
 int id scannerActivity_btn 0x7f050018
-int id searchActivity_keyword 0x7f05001b
-int id searchActivity_scanner 0x7f05001a
-int id searchActivity_search 0x7f050019
+int id searchActivity_input_field 0x7f05001b
+int id searchActivity_scanner 0x7f050019
+int id searchActivity_search 0x7f05001a
 int id searchResultDetailActivity_BildLabel 0x7f050020
 int id section_label 0x7f05002d
 int id terrain 0x7f050003
