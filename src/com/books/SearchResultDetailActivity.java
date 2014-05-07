@@ -25,13 +25,14 @@ public class SearchResultDetailActivity extends Activity {
 	private String authors="";
 	private String title="";
 	private String description="";
-	private String isbn;
+//	private String isbn;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result_detail);
-
+        mHelper = new DatenbankManager(this);
+        
         //	Zum verbinden der verschiedenen Activitys
         Intent in = getIntent();
 
@@ -41,18 +42,18 @@ public class SearchResultDetailActivity extends Activity {
         authors = in.getStringExtra(TAG_AUTHORS);
         title = in.getStringExtra(TAG_TITLE);
         description = in.getStringExtra(TAG_DESCRIPTION);
-        isbn = in.getStringExtra(TAG_IDENTIFIER);
+//        isbn = in.getStringExtra(TAG_IDENTIFIER);
 
         //	Ausgabe der Werte
         TextView lblAuthor = (TextView) findViewById(R.id.SearchResultDetailActivity_AutorLabel);
         TextView lblTitle = (TextView) findViewById(R.id.SearchResultDetailActivity_TitelLabel);
         TextView lblDescription = (TextView) findViewById(R.id.SearchResultDetailActivity_InhaltLabel);
-        TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
+//        TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
 
         lblAuthor.setText(authors);
         lblTitle.setText(title);
         lblDescription.setText(description);
-        lblIsbn.setText(isbn);
+//        lblIsbn.setText(isbn);
         
         
 		hinzufuegen = (Button) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
@@ -66,16 +67,12 @@ public class SearchResultDetailActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				ContentValues werte_titel = new ContentValues();
-				ContentValues werte_autor = new ContentValues();
-				ContentValues werte_isbn = new ContentValues();
-				
-				werte_titel.put("titel", title);
-				werte_autor.put("autor", authors);
-				werte_isbn.put("isbn", isbn);
-				mDatenbank.insert("klassen",null,werte_titel);
-				mDatenbank.insert("klassen",null,werte_autor);
-				mDatenbank.insert("klassen",null,werte_isbn);
+				ContentValues werte = new ContentValues();
+								
+				werte.put("titel", title);
+				werte.put("autor", authors);
+//				werte_isbn.put("isbn", isbn);
+				mDatenbank.insert("klassen",null,werte);
 				
 				Toast.makeText(
 						getApplicationContext(),

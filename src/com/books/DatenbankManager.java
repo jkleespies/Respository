@@ -12,8 +12,9 @@ class DatenbankManager extends SQLiteOpenHelper {
 	private static final String KLASSEN_CREATE = "CREATE TABLE klassen ("
 			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
 			+ "titel TEXT NOT NULL, "
-			+ "autor TEXT NOT NULL,"
-			+ "isbn TEXT )";
+			+ "autor TEXT NOT Null)";
+//			+ "autor TEXT NOT NULL,"
+//			+ "isbn TEXT )";
 	private static final String KLASSEN_DROP = "DROP TABLE IF EXITSTS klassen";
 
 

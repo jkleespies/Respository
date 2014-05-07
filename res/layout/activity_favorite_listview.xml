@@ -40,13 +40,13 @@
         android:layout_toRightOf="@id/thumbnail"
         android:text="@string/FavoriteActivity_Autor" />
 
-    <TextView
+ <!--     <TextView
         android:id="@+id/FavoriteActivity_ISBN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/FavoriteActivity_Autor"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@id/thumbnail"
-        android:text="@string/FavoriteActivity_ISBN" />
+        android:text="@string/FavoriteActivity_ISBN" />  -->
 
 </RelativeLayout>

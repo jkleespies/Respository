@@ -98,13 +98,13 @@
         android:textSize="15dip"
         android:textStyle="bold" />
 
-    <TextView
+  <!--  <TextView
         android:id="@+id/SearchResultDetailActivity_ISBNLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/SearchResultDetailActivity_BildLabel"
         android:layout_below="@+id/SearchResultDetailActivity_BildLabel"
         android:layout_marginTop="21dp"
-        android:text="ISBN" />
+        android:text="ISBN" />  -->
 
 </RelativeLayout>

@@ -34,7 +34,7 @@ public class FavoriteActivity extends ListActivity {
 	private static final String TAG_ID = "_id";
 	private static final String TAG_TITEL = "titel";
 	private static final String TAG_AUTOR = "autor";
-	private static final String TAG_ISBN = "isbn";
+//	private static final String TAG_ISBN = "isbn";
 	
 	
 	
@@ -92,7 +92,7 @@ public class FavoriteActivity extends ListActivity {
 	public void ladeKlassen() {
 		FavoriteList = new ArrayList<HashMap<String, Object>>();
 		Cursor klassenCursor = mDatenbank.query("klassen",
-				new String[] {"_id", "titel", "autor", "isbn"},
+				new String[] {"_id", "titel", "autor"},  // ,"isbn"
 				null, null, null, null, null);
 		HashMap<String, Object> item = new HashMap<String, Object>();
 		klassenCursor.moveToFirst();
@@ -101,18 +101,23 @@ public class FavoriteActivity extends ListActivity {
 			item = new HashMap<String, Object>();
 			String titel = klassenCursor.getString(1);
 			String autor = klassenCursor.getString(2);
-			String isbn = klassenCursor.getString(3);
+//			String isbn = klassenCursor.getString(3);
 			
 			item.put(TAG_TITEL, titel);
 			item.put(TAG_AUTOR, autor);
-			item.put(TAG_ISBN, isbn);
+//			item.put(TAG_ISBN, isbn);
 			FavoriteList.add(item);
 			
 			klassenCursor.moveToNext();
 		}
+//		ListAdapter adapter = new SimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
+//				new String[] {TAG_TITEL, TAG_AUTOR, TAG_ISBN}, 
+//				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN});
+		
 		ListAdapter adapter = new SimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
-				new String[] {TAG_TITEL, TAG_AUTOR, TAG_ISBN}, 
-				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN});
+				new String[] {TAG_TITEL, TAG_AUTOR}, 
+				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor});
+		
 		setListAdapter(adapter);
 	
 	}
@@ -138,7 +143,7 @@ public class FavoriteActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 
 		Cursor cursor = mDatenbank.query("klassen", new String[] { "_id",
-				"titel", "autor", "isbn" }, null, null, null, null, null);
+				"titel", "autor" }, null, null, null, null, null);
 		if (cursor != null) {
 			if (cursor.moveToPosition(position)) {
 				int column = cursor.getColumnIndex("titel"); // um titel aus
@@ -147,8 +152,8 @@ public class FavoriteActivity extends ListActivity {
 				column = cursor.getColumnIndex("autor");	 // um autor aus liste
 				String autor = cursor.getString(column);	// auszulesen
 								
-				column = cursor.getColumnIndex("isbn"); 	// um isbn aus liste
-				String isbn = cursor.getString(column);			// auszulesen
+//				column = cursor.getColumnIndex("isbn"); 	// um isbn aus liste
+//				String isbn = cursor.getString(column);			// auszulesen
 								
 				column = cursor.getColumnIndex("_id");		//um _id der Spalte zu bekommen
 				Integer _id = cursor.getInt(column);
@@ -163,7 +168,7 @@ public class FavoriteActivity extends ListActivity {
 						FavoriteDetailActivity.class);
 				startFavoriteDetail.putExtra("titel", titel);
 				startFavoriteDetail.putExtra("autor", autor);
-				startFavoriteDetail.putExtra("isbn", isbn);
+//				startFavoriteDetail.putExtra("isbn", isbn);
 				startFavoriteDetail.putExtra("_id", _id);
 				startActivity(startFavoriteDetail);
 				Log.d("onListItemClick aufgerufen", "Item wurde ausgwählt, es sollte FavoriteDetailActivity starten");

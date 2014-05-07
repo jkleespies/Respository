@@ -45,14 +45,14 @@
         android:layout_marginTop="20dp"
         android:text="@string/FavoriteDetailActivity_Autor" />
 
-    <TextView
+<!--     <TextView
         android:id="@+id/FavoriteDetailActivity_ISBN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/FavoriteDetailActivity_Autor"
         android:layout_marginLeft="150dp"
         android:layout_marginTop="20dp"
-        android:text="@string/FavoriteDetailActivity_ISBN" />
+        android:text="@string/FavoriteDetailActivity_ISBN" />   -->
 
     <TextView
         android:id="@+id/FavoriteDetailActivity_Inhalt"
