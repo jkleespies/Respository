@@ -46,6 +46,8 @@ public class SearchResultActivity extends ListActivity {
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_INDUSTRYIDENTIFIER = "industryIdentifiers";
 	private static final String TAG_IDENTIFIER = "identifiers";
+//	private static final String TAG_IMAGELINKS = "imageLinks";
+//	private static final String TAG_THUMBNAIL = "thumbnail";
 	
 	// JSON Array initialisieren
 	JSONArray items = null;
@@ -174,7 +176,7 @@ public class SearchResultActivity extends ListActivity {
 						item.put(TAG_AUTHORS, authors);
 						item.put(TAG_TITLE, title);
 						item.put(TAG_DESCRIPTION, description);	
-						item.put(TAG_IDENTIFIER, identifier);				
+						item.put(TAG_IDENTIFIER, identifier);
 
 						// Buch der Buchliste hinzufügen
 						bookList.add(item);

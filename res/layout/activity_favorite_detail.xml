@@ -58,10 +58,11 @@
         android:id="@+id/FavoriteDetailActivity_Inhalt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/FavoriteDetailActivity_Bild"
+        android:layout_below="@+id/FavoriteDetailActivity_ISBN"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:text="@string/FavoriteDetailActivity_Inhalt" />
+        android:text="@string/FavoriteDetailActivity_Inhalt"
+         />
     
     <Button
         android:id="@+id/FavoriteDetailActivity_Buecherei"

@@ -59,20 +59,20 @@
         android:layout_height="wrap_content" >
 	</FrameLayout>
 
-    <EditText
+    <TextView
         android:id="@+id/SearchResultDetailActivity_InhaltLabel"
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         android:layout_above="@+id/SearchResultDetailActivity_Buecherei"
+        android:layout_below="@+id/SearchResultDetailActivity_ISBNLabel"
         android:layout_alignParentLeft="true"
         android:ems="10"
-        android:inputType="textMultiLine"
         android:text="Bücherinhalt"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="15dip" >
 
         <requestFocus />
-    </EditText>
+    </TextView>
 
     <TextView
         android:id="@+id/SearchResultDetailActivity_AutorLabel"

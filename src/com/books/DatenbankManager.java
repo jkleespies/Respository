@@ -9,12 +9,12 @@ class DatenbankManager extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "database.db";
 	private static final int DB_VERSION = 1;
-	private static final String KLASSEN_CREATE = "CREATE TABLE klassen ("
+	private static final String KLASSEN_CREATE = "CREATE TABLE book ("
 			+ "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-			+ "titel TEXT NOT NULL, "
-//			+ "autor TEXT NOT Null)"; //wird nicht gebraucht, da isbn nun auch funktionieren sollte
-			+ "autor TEXT NOT NULL,"
-			+ "isbn TEXT )";
+			+ "title TEXT NOT NULL, "
+			+ "author TEXT NOT NULL,"
+			+ "isbn TEXT,"
+			+ "description TEXT)";
 	private static final String KLASSEN_DROP = "DROP TABLE IF EXITSTS klassen";
 
 

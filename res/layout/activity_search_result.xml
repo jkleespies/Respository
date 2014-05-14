@@ -5,28 +5,24 @@
     android:gravity="right"
     android:orientation="vertical" >
 
-    <!--	Suche EditText und Suchergebnisliste ListView	-->
-
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="396sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:divider="#b5b5b5"
-        android:dividerHeight="1dp"
-        android:listSelector="@drawable/list_selector" >
-
-    </ListView>
-
+    <!-- Suche EditText und Suchergebnisliste ListView -->
     <TextView
         android:id="@+id/SearchResultActivity_Suche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@android:id/list"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
         android:text="TextView" />
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/SearchResultActivity_Suche"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector" >
+    </ListView>
+
+
 
 </RelativeLayout>

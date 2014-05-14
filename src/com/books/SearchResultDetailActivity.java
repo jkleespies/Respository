@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,7 @@ public class SearchResultDetailActivity extends Activity {
 	private Button hinzufuegen;
 	private SQLiteDatabase mDatenbank;
 	private DatenbankManager mHelper;
-	private static final String KLASSEN_SELECT_RAW = "SELECT _id, titel, autor FROM klassen";
+
 	private String authors="";
 	private String title="";
 	private String description="";
@@ -66,13 +67,14 @@ public class SearchResultDetailActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-
+				Log.d("hinzufügen", "werte werden in db eingefügt");
 				ContentValues werte = new ContentValues();
 								
-				werte.put("titel", title);
-				werte.put("autor", authors);
+				werte.put("title", title);
+				werte.put("author", authors);
 				werte.put("isbn", identifiers);
-				mDatenbank.insert("klassen",null,werte);
+				werte.put("description", description);
+				mDatenbank.insert("book",null,werte);
 				
 				Toast.makeText(
 						getApplicationContext(),
