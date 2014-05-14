@@ -6,7 +6,8 @@
     android:orientation="vertical" >
 
     <!--	Suche EditText und Suchergebnisliste ListView	-->
-    <ListView
+
+    <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="396sp"

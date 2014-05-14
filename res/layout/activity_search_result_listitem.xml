@@ -25,7 +25,8 @@
 	        android:id="@+id/SearchResultActivity_Bild"
 			android:layout_width="60dip"
 		    android:layout_height="60dip"
-	        android:src="@drawable/brecht" />
+		    android:background="@drawable/brecht" />
+
 	</LinearLayout>
 
 	<!--	Buchtitel	-->
@@ -66,17 +67,16 @@
         android:layout_alignLeft="@+id/SearchResultActivity_Autor"
         android:text="Test"
         android:textSize="1sp" />
-    
-    <!-- 	unsichtbar	-->
+
     <TextView
         android:id="@+id/SearchResultActivity_ISBN"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
-        android:layout_alignBottom="@+id/thumbnail"
-        android:layout_alignLeft="@+id/SearchResultActivity_Inhalt"
-        android:text="Test"
-        android:textSize="1sp" />
-
+        android:layout_above="@+id/SearchResultActivity_Inhalt"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="ISBN"
+        android:textColor="#343434"
+        android:textSize="10dip" />
 
 </RelativeLayout>

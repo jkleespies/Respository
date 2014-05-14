@@ -62,7 +62,7 @@
     <EditText
         android:id="@+id/SearchResultDetailActivity_InhaltLabel"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
         android:layout_above="@+id/SearchResultDetailActivity_Buecherei"
         android:layout_alignParentLeft="true"
         android:ems="10"
@@ -98,13 +98,13 @@
         android:textSize="15dip"
         android:textStyle="bold" />
 
-  <!--  <TextView
-        android:id="@+id/SearchResultDetailActivity_ISBNLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/SearchResultDetailActivity_BildLabel"
-        android:layout_below="@+id/SearchResultDetailActivity_BildLabel"
-        android:layout_marginTop="21dp"
-        android:text="ISBN" />  -->
+  	<TextView
+  	    android:id="@+id/SearchResultDetailActivity_ISBNLabel"
+  	    android:layout_width="wrap_content"
+  	    android:layout_height="wrap_content"
+  	    android:layout_alignBottom="@+id/SearchResultDetailActivity_BildLabel"
+  	    android:layout_toRightOf="@+id/SearchResultDetailActivity_BildLabel"
+  	    android:text="ISBN" />
+  	
 
 </RelativeLayout>

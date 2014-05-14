@@ -17,7 +17,7 @@ public class SearchResultDetailActivity extends Activity {
 	private static final String TAG_AUTHORS = "authors";
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_DESCRIPTION = "description";
-	private static final String TAG_IDENTIFIER = "identifier";
+	private static final String TAG_IDENTIFIER = "identifiers";
 	private Button hinzufuegen;
 	private SQLiteDatabase mDatenbank;
 	private DatenbankManager mHelper;
@@ -25,7 +25,7 @@ public class SearchResultDetailActivity extends Activity {
 	private String authors="";
 	private String title="";
 	private String description="";
-//	private String isbn;
+    private String identifiers="";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,18 +42,18 @@ public class SearchResultDetailActivity extends Activity {
         authors = in.getStringExtra(TAG_AUTHORS);
         title = in.getStringExtra(TAG_TITLE);
         description = in.getStringExtra(TAG_DESCRIPTION);
-//        isbn = in.getStringExtra(TAG_IDENTIFIER);
+        identifiers = in.getStringExtra(TAG_IDENTIFIER);
 
         //	Ausgabe der Werte
         TextView lblAuthor = (TextView) findViewById(R.id.SearchResultDetailActivity_AutorLabel);
         TextView lblTitle = (TextView) findViewById(R.id.SearchResultDetailActivity_TitelLabel);
         TextView lblDescription = (TextView) findViewById(R.id.SearchResultDetailActivity_InhaltLabel);
-//        TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
+        TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
 
         lblAuthor.setText(authors);
         lblTitle.setText(title);
         lblDescription.setText(description);
-//        lblIsbn.setText(isbn);
+        lblIsbn.setText(identifiers);
         
         
 		hinzufuegen = (Button) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
@@ -71,7 +71,7 @@ public class SearchResultDetailActivity extends Activity {
 								
 				werte.put("titel", title);
 				werte.put("autor", authors);
-//				werte_isbn.put("isbn", isbn);
+				werte.put("isbn", identifiers);
 				mDatenbank.insert("klassen",null,werte);
 				
 				Toast.makeText(

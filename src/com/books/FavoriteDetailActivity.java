@@ -21,8 +21,8 @@ public class FavoriteDetailActivity extends Activity {
 
 	private TextView titel;
 	private TextView autor;
-//	private TextView isbn;
-//	private TextView inhalt;
+	private TextView isbn;
+	private TextView inhalt;
 	private ImageView bild;
 	
 
@@ -31,7 +31,7 @@ public class FavoriteDetailActivity extends Activity {
 	
 	private String leseTitel;
 	private String leseAutor;
-//	private String leseISBN;
+	private String leseISBN;
 	private Integer leseID;
 	private String _id;
 
@@ -45,7 +45,7 @@ public class FavoriteDetailActivity extends Activity {
 		Intent startFavoriteDetail = getIntent();
 		leseTitel = startFavoriteDetail.getExtras().getString("titel");
 		leseAutor = startFavoriteDetail.getExtras().getString("autor");
-//		leseISBN = startFavoriteDetail.getExtras().getString("isbn");
+		leseISBN = startFavoriteDetail.getExtras().getString("isbn");
 		leseID = startFavoriteDetail.getExtras().getInt("_id");
 		
 		
@@ -53,8 +53,8 @@ public class FavoriteDetailActivity extends Activity {
 		titel.setText(leseTitel);
 		autor=(TextView)findViewById(R.id.FavoriteDetailActivity_Autor);
 		autor.setText(leseAutor);
-//		isbn=(TextView)findViewById(R.id.FavoriteDetailActivity_ISBN);
-//		isbn.setText(leseISBN);
+		isbn=(TextView)findViewById(R.id.FavoriteDetailActivity_ISBN);
+		isbn.setText(leseISBN);
 		//	inhalt;			inhalt muss per get aus der Books api geladen werden
 		//	 bild;			bild muss entweder aus SQL oder aus einem Dateiverzeichnnis geladen werden		
 		
