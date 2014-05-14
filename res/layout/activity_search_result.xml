@@ -10,9 +10,13 @@
         android:id="@+id/SearchResultActivity_Suche"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:text="TextView" />
+        android:text="TextView" 
+        android:textSize="15dip"
+        android:layout_toRightOf="@+id/suche"/>
+    
+    
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
@@ -23,6 +27,13 @@
         android:listSelector="@drawable/list_selector" >
     </ListView>
 
-
+    <TextView
+        android:id="@+id/suche"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/SearchResultActivity_Suche"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="5dp"
+        android:text="Suche:" />
 
 </RelativeLayout>

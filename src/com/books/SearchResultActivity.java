@@ -20,6 +20,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -69,7 +71,13 @@ public class SearchResultActivity extends ListActivity {
 		}
 		else {
 			TextView tv = (TextView)findViewById(R.id.SearchResultActivity_Suche);
-			tv.setText(searchPhrase);	
+//			tv.setText(searchPhrase);	
+//			 unterstreicht die Suchphrase
+			SpannableString content = new SpannableString(searchPhrase);	
+			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
+			tv.setText(content);
+			
+			
 			bookList = new ArrayList<HashMap<String, String>>();	         
 		
 			ListView lv = getListView();	
@@ -139,7 +147,7 @@ public class SearchResultActivity extends ListActivity {
 					items = jsonObj.getJSONArray(TAG_ITEMS);
 					
 					// Schleifendurchlauf für die Bücher            						            	
-					for (int i = 0; i < 5; i++) {	
+					for (int i = 0; i < 10; i++) {	
 						JSONObject it = items.getJSONObject(i);										
 						
 						JSONObject volumeInfo = it.getJSONObject(TAG_VOLUMEINFO);
@@ -152,7 +160,7 @@ public class SearchResultActivity extends ListActivity {
 							description = volumeInfo.getString(TAG_DESCRIPTION);
 						}
 						else {
-							description = "Leider keine Beschreibung verfuegbar";
+							description = getString(R.string.no_description_available);
 						}
 						
 						String identifier = "";

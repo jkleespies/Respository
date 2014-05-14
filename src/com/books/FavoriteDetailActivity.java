@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.support.v4.app.Fragment;
+import android.text.method.ScrollingMovementMethod;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -57,6 +58,7 @@ public class FavoriteDetailActivity extends Activity {
 //		id wird benötigt um einen Datensatz mit delete zu löschen		
 		readID = startFavoriteDetail.getExtras().getInt("_id"); 
 		readDescription = startFavoriteDetail.getExtras().getString("description");
+		
 
 		
 
@@ -69,6 +71,7 @@ public class FavoriteDetailActivity extends Activity {
 		isbn.setText(readISBN);
 		description = (TextView)findViewById(R.id.FavoriteDetailActivity_Inhalt);
 		description.setText(readDescription);
+		description.setMovementMethod(new ScrollingMovementMethod());
 
 		
 

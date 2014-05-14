@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,8 @@ public class SearchResultDetailActivity extends Activity {
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_IDENTIFIER = "identifiers";
-	private Button hinzufuegen;
+	private Button add;
+	private Button nextLibrary;
 	private SQLiteDatabase mDatenbank;
 	private DatenbankManager mHelper;
 
@@ -49,6 +51,7 @@ public class SearchResultDetailActivity extends Activity {
         TextView lblAuthor = (TextView) findViewById(R.id.SearchResultDetailActivity_AutorLabel);
         TextView lblTitle = (TextView) findViewById(R.id.SearchResultDetailActivity_TitelLabel);
         TextView lblDescription = (TextView) findViewById(R.id.SearchResultDetailActivity_InhaltLabel);
+        lblDescription.setMovementMethod(new ScrollingMovementMethod());
         TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
 
         lblAuthor.setText(authors);
@@ -57,8 +60,8 @@ public class SearchResultDetailActivity extends Activity {
         lblIsbn.setText(identifiers);
         
         
-		hinzufuegen = (Button) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
-		hinzufuegen.setOnClickListener(new View.OnClickListener() { // Button
+		add = (Button) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
+		add.setOnClickListener(new View.OnClickListener() { // Button
 																	// zum
 																	// Hinzufüengen
 																	// in die
@@ -88,7 +91,16 @@ public class SearchResultDetailActivity extends Activity {
 
 		});
         
+		nextLibrary = (Button) findViewById(R.id.SearchResultDetailActivity_Buecherei); 
+		nextLibrary.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent library = new Intent(getApplicationContext(),
+						MapActivity.class);
+				startActivity(library);
 
+			}
+		});
     }
 	
 	protected void onResume(){

@@ -48,5 +48,7 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_search_result_activty">SearchResultActivty</string>
     <string name="title_activity_single_book">SingleBookActivity</string>
+    
+    <string name="no_description_available">Leider keine Beschreibung verfügbar.</string>
 
 </resources>
