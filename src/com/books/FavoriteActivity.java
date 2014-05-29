@@ -1,14 +1,21 @@
 package com.books;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
 import android.app.ListActivity;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -36,7 +43,11 @@ public class FavoriteActivity extends ListActivity {
 	private static final String TAG_AUTHOR = "author";
 	private static final String TAG_ISBN = "isbn";
 	private static final String TAG_DESCRIPTION = "description";
-	
+	private static final String TAG_IMAGE = "image";
+	private String imageName;
+	private File path;
+	private File f;
+	private Bitmap b;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,7 +101,7 @@ public class FavoriteActivity extends ListActivity {
 	public void getBooks() {
 		FavoriteList = new ArrayList<HashMap<String, Object>>();
 		Cursor bookCursor = mDatenbank.query("book",
-				new String[] {"_id", "title", "author", "isbn", "description"},  
+				new String[] {"_id", "title", "author", "isbn", "description", "image"},  
 				null, null, null, null, null);
 		HashMap<String, Object> item = new HashMap<String, Object>();
 		bookCursor.moveToFirst();
@@ -101,19 +112,40 @@ public class FavoriteActivity extends ListActivity {
 			String author = bookCursor.getString(2);
 			String isbn = bookCursor.getString(3);
 			String description = bookCursor.getString(4);
+			String image = bookCursor.getString(5);
+			
+			ContextWrapper cw = new ContextWrapper(getApplication());
+			path = cw.getDir("booksImageDir", Context.MODE_PRIVATE);
+			f = new File(path, image);
+		
+			try{
+				b = BitmapFactory.decodeStream(new FileInputStream(f));
+				
+				item.put(TAG_IMAGE, b);
+				
+			}catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 			
 			item.put(TAG_TITLE, title);
 			item.put(TAG_AUTHOR, author);
 			item.put(TAG_ISBN, isbn);
 			item.put(TAG_DESCRIPTION, description);
+			
 			FavoriteList.add(item);
 			
 			bookCursor.moveToNext();
 		}
-		ListAdapter adapter = new SimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
-				new String[] {TAG_TITLE, TAG_AUTHOR, TAG_ISBN}, 
-				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN});
+//		ListAdapter adapter = new SimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
+//				new String[] {TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE}, 
+//				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild});
+//		
+//		setListAdapter(adapter);
 		
+		ListAdapter adapter = new ExtendedSimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
+		new String[] {TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE}, 
+		new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild});
+
 		setListAdapter(adapter);
 	
 	}
@@ -139,7 +171,7 @@ public class FavoriteActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 
 		Cursor cursor = mDatenbank.query("book", new String[] { "_id",
-				"title", "author", "isbn", "description" }, null, null, null, null, null);
+				"title", "author", "isbn", "description", "image" }, null, null, null, null, null);
 		if (cursor != null) {
 			if (cursor.moveToPosition(position)) {
 				int column = cursor.getColumnIndex("title"); // um titel aus
@@ -157,6 +189,9 @@ public class FavoriteActivity extends ListActivity {
 				column = cursor.getColumnIndex("description");
 				String description= cursor.getString(column);
 				
+				column = cursor.getColumnIndex("image");
+				String image = cursor.getString(column);
+				
 				Toast.makeText(getApplicationContext(),
 						titel + " wurde ausgewählt",
 						Toast.LENGTH_SHORT).show();
@@ -170,6 +205,7 @@ public class FavoriteActivity extends ListActivity {
 				startFavoriteDetail.putExtra(TAG_ISBN, isbn);
 				startFavoriteDetail.putExtra(TAG_ID, _id);
 				startFavoriteDetail.putExtra(TAG_DESCRIPTION, description);
+				startFavoriteDetail.putExtra(TAG_IMAGE, image);
 				startActivity(startFavoriteDetail);
 				Log.d("onListItemClick aufgerufen", "Item wurde ausgwählt, es sollte FavoriteDetailActivity starten");
 

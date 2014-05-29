@@ -1,5 +1,8 @@
 package com.books;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -10,9 +13,13 @@ import android.support.v4.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +51,8 @@ public class FavoriteDetailActivity extends Activity {
 	private Integer readID;
 	private String _id;
 	private String readDescription;
+	private String readImage;
+	private File f;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +67,7 @@ public class FavoriteDetailActivity extends Activity {
 //		id wird benötigt um einen Datensatz mit delete zu löschen		
 		readID = startFavoriteDetail.getExtras().getInt("_id"); 
 		readDescription = startFavoriteDetail.getExtras().getString("description");
+		readImage = startFavoriteDetail.getExtras().getString("image");
 		
 
 		
@@ -72,8 +82,22 @@ public class FavoriteDetailActivity extends Activity {
 		description = (TextView)findViewById(R.id.FavoriteDetailActivity_Inhalt);
 		description.setText(readDescription);
 		description.setMovementMethod(new ScrollingMovementMethod());
+		image = (ImageView)findViewById(R.id.FavoriteDetailActivity_Bild);
 
-		
+		ContextWrapper cw = new ContextWrapper(getApplicationContext());
+		File path = cw.getDir("booksImageDir", Context.MODE_PRIVATE);
+		f = new File(path, readImage); //image_2.jpg"
+		Bitmap b;
+		try {
+			b = BitmapFactory.decodeStream(new FileInputStream(f));
+			image.setImageBitmap(b);
+			Toast.makeText(getApplicationContext(), "Image show  " + readImage,
+					Toast.LENGTH_SHORT).show();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 
 		// inhalt; inhalt muss per get aus der Books api geladen werden
 		// bild; bild muss entweder aus SQL oder aus einem Dateiverzeichnnis
@@ -83,10 +107,9 @@ public class FavoriteDetailActivity extends Activity {
 		delete.setOnClickListener(new View.OnClickListener() {
 
 			@Override
-			public void onClick(View v) { // Button um Favoriteneintrag aus der
-											// Datenbank zu löschen
+			public void onClick(View v) { // Eintrag aus Favoriten löschen
 				// TODO Auto-generated method stub
-				// Lösche Daten aus Datenbank und schließe Activity
+				// Daten aus Datenbank löschen
 				_id = (Integer.toString(readID));
 				String where = "_id = ?";
 				String[] whereArgs = { _id };
@@ -95,6 +118,8 @@ public class FavoriteDetailActivity extends Activity {
 				Toast.makeText(getApplicationContext(),
 						"Eintrag aus Favoriten gelöscht", Toast.LENGTH_SHORT)
 						.show();
+				// Bild aus booksImgDir löschen
+				f.delete();
 				finish(); // hier wird die aktuelle Activity geschlossen
 
 			}

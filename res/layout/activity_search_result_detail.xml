@@ -23,8 +23,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/brecht" />
+        android:layout_marginTop="30dp"/>
+       <!--  android:src="@drawable/brecht" --> 
 
     <!-- Inhalt Label -->
 	<FrameLayout

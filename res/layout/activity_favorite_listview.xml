@@ -18,7 +18,7 @@
             android:id="@+id/FavoriteActivity_Bild"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_drawer" />
+             />
     </LinearLayout>
 
     <TextView

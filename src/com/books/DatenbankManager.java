@@ -14,7 +14,8 @@ class DatenbankManager extends SQLiteOpenHelper {
 			+ "title TEXT NOT NULL, "
 			+ "author TEXT NOT NULL,"
 			+ "isbn TEXT,"
-			+ "description TEXT)";
+			+ "description TEXT, "
+			+ "image STRING)";
 	private static final String KLASSEN_DROP = "DROP TABLE IF EXITSTS klassen";
 
 
