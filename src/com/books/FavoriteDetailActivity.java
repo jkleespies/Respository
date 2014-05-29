@@ -91,8 +91,6 @@ public class FavoriteDetailActivity extends Activity {
 		try {
 			b = BitmapFactory.decodeStream(new FileInputStream(f));
 			image.setImageBitmap(b);
-			Toast.makeText(getApplicationContext(), "Image show  " + readImage,
-					Toast.LENGTH_SHORT).show();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

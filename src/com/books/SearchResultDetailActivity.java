@@ -38,7 +38,7 @@ public class SearchResultDetailActivity extends Activity {
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_IDENTIFIER = "identifiers";
-	private Button add;
+	private ImageView add;
 	private Button nextLibrary;
 	private SQLiteDatabase mDatenbank;
 	private DatenbankManager mHelper;
@@ -101,7 +101,7 @@ public class SearchResultDetailActivity extends Activity {
     
         
         
-		add = (Button) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
+		add = (ImageView) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
 		add.setOnClickListener(new View.OnClickListener() { // Button
 																	// zum
 																	// Hinzufüengen
@@ -156,7 +156,7 @@ public class SearchResultDetailActivity extends Activity {
 				
 				Toast.makeText(
 						getApplicationContext(),
-						title + "in Favoriten gespeichert",
+						title + " gespeichert",
 						Toast.LENGTH_SHORT).show();
 				
 				Intent goToStart = new Intent (getApplicationContext(), StartActivity.class);
@@ -181,7 +181,7 @@ public class SearchResultDetailActivity extends Activity {
 	protected void onResume(){
 		super.onResume();
 		mDatenbank = mHelper.getReadableDatabase();
-		Toast.makeText(this, "Datenbank geöffnet", Toast.LENGTH_SHORT).show();
+	
 	}
 	
 	//*********** TESTWEISE HINZUGEFÜGTE KLASSEN!!!!

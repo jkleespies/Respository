@@ -153,7 +153,6 @@ public class FavoriteActivity extends ListActivity {
 	protected void onResume() { // hier wird die Datenbank geöffnet
 		super.onResume();
 		mDatenbank = mHelper.getReadableDatabase();
-//		Toast.makeText(this, "Datenbank geöffnet", Toast.LENGTH_SHORT).show();
 		getBooks();
 	}
 
@@ -162,8 +161,6 @@ public class FavoriteActivity extends ListActivity {
 									// gelöscht
 		super.onDestroy();
 		mDatenbank.close();
-//		Toast.makeText(this, "Datenbank geschlossen", Toast.LENGTH_SHORT)
-//				.show();
 	}
 
 	@Override
@@ -192,10 +189,6 @@ public class FavoriteActivity extends ListActivity {
 				column = cursor.getColumnIndex("image");
 				String image = cursor.getString(column);
 				
-				Toast.makeText(getApplicationContext(),
-						titel + " wurde ausgewählt",
-						Toast.LENGTH_SHORT).show();
-
 				// hier werden dem Intent die Werte für die
 				// FavoriteDetailActivity übergeben
 				Intent startFavoriteDetail = new Intent(getApplicationContext(),
