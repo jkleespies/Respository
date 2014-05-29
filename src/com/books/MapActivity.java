@@ -61,8 +61,8 @@ public class MapActivity extends Activity implements LocationListener {
 		setContentView(R.layout.activity_map);
 
 		//get drawable IDs
-		userIcon = R.drawable.ic_launcher;
-		shopIcon = R.drawable.ic_launcher;
+		userIcon = R.drawable.location;
+		shopIcon = R.drawable.location_place;
 
 		//find out if we already have it
 		if(theMap==null){

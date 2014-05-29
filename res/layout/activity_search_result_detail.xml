@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="left"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="@drawable/background_image" >
 
     <!-- Detailiertes Suchergebnis eines einzelnen ausgewählten Buches -->
     <!-- wird beim klicken auf ein Item in der Suchergebnisliste ListView -->

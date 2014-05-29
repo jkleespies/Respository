@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.books.FavoriteDetailActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/background_image">
 
     <ImageView
         android:id="@+id/FavoriteDetailActivity_Bild"
