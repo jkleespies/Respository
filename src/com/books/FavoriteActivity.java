@@ -114,7 +114,7 @@ public class FavoriteActivity extends ListActivity {
 			String description = bookCursor.getString(4);
 			String image = bookCursor.getString(5);
 			
-			ContextWrapper cw = new ContextWrapper(getApplication());
+			ContextWrapper cw = new ContextWrapper(getApplicationContext());
 			path = cw.getDir("booksImageDir", Context.MODE_PRIVATE);
 			f = new File(path, image);
 		
@@ -130,7 +130,7 @@ public class FavoriteActivity extends ListActivity {
 			item.put(TAG_TITLE, title);
 			item.put(TAG_AUTHOR, author);
 			item.put(TAG_ISBN, isbn);
-			item.put(TAG_DESCRIPTION, description);
+//			item.put(TAG_DESCRIPTION, description);
 			
 			FavoriteList.add(item);
 			

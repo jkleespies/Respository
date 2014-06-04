@@ -19,7 +19,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class SearchResultActivity extends ListActivity {
@@ -48,14 +46,15 @@ public class SearchResultActivity extends ListActivity {
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_INDUSTRYIDENTIFIER = "industryIdentifiers";
 	private static final String TAG_IDENTIFIER = "identifiers";
-//	private static final String TAG_IMAGELINKS = "imageLinks";
-//	private static final String TAG_THUMBNAIL = "thumbnail";
+	private static final String TAG_IMAGELINKS = "imageLinks";
+	private static final String TAG_THUMBNAIL = "thumbnail";
+	public Bitmap bm; 
 	
 	// JSON Array initialisieren
 	JSONArray items = null;
 	
 	// Hashmap für die ListView
-	ArrayList<HashMap<String, String>> bookList;
+	ArrayList<HashMap<String, Object>> bookList;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +77,7 @@ public class SearchResultActivity extends ListActivity {
 			tv.setText(content);
 			
 			
-			bookList = new ArrayList<HashMap<String, String>>();	         
+			bookList = new ArrayList<HashMap<String, Object>>();	         
 		
 			ListView lv = getListView();	
 		
@@ -100,6 +99,9 @@ public class SearchResultActivity extends ListActivity {
 							.getText().toString();	
 					String identifier = ((TextView) view.findViewById(R.id.SearchResultActivity_ISBN))
 							.getText().toString();
+					ImageView image = (ImageView)findViewById(R.id.SearchResultActivity_Bild);
+					image.buildDrawingCache();
+					Bitmap imageBitmap = image.getDrawingCache();
 					
 					// Starten der Detailansicht
 					Intent in = new Intent(getApplicationContext(), SearchResultDetailActivity.class);
@@ -107,6 +109,7 @@ public class SearchResultActivity extends ListActivity {
 					in.putExtra(TAG_TITLE, title);
 					in.putExtra(TAG_DESCRIPTION, description);
 					in.putExtra(TAG_IDENTIFIER, identifier);
+					in.putExtra(TAG_THUMBNAIL, imageBitmap);
 					startActivity(in);
 				}
 			});
@@ -176,15 +179,24 @@ public class SearchResultActivity extends ListActivity {
 								identifier = industry.getString("identifier");
 							}
 						}
-																								
+								
+						JSONObject imageLinks = volumeInfo.getJSONObject(TAG_IMAGELINKS);
+						String thumbnail = imageLinks.getString(TAG_THUMBNAIL);
+						
+						BitmapFactory.Options bmOptions;
+						bmOptions = new BitmapFactory.Options();
+						bmOptions.inSampleSize = 1;
+						bm = loadBitmap(thumbnail, bmOptions);
+						
 						// Tmp Hashmap für die einzelnen Bücherdaten
-						HashMap<String, String> item = new HashMap<String, String>();
+						HashMap<String, Object> item = new HashMap<String, Object>();
 
 						// Einzelne Bücher der Hashmap hinzufügen
 						item.put(TAG_AUTHORS, authors);
 						item.put(TAG_TITLE, title);
 						item.put(TAG_DESCRIPTION, description);	
 						item.put(TAG_IDENTIFIER, identifier);
+						item.put(TAG_THUMBNAIL, bm);
 
 						// Buch der Buchliste hinzufügen
 						bookList.add(item);
@@ -208,13 +220,51 @@ public class SearchResultActivity extends ListActivity {
 				pDialog.dismiss();
 			
 			/*** Updaten der JSON Daten in die ListView */
-			ListAdapter adapter = new SimpleAdapter (
-					SearchResultActivity.this, bookList,
-					R.layout.activity_search_result_listitem, new String[] { TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER }, 
-					new int[] { R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN }
-			);
+			
 
+			ListAdapter adapter = new ExtendedSimpleAdapter(SearchResultActivity.this, bookList, R.layout.activity_search_result_listitem,
+					new String[] {TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER, TAG_THUMBNAIL}, 
+					new int[] {R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN, R.id.SearchResultActivity_Bild});
 			setListAdapter(adapter);
+//			ListAdapter adapter = new SimpleAdapter (
+//					SearchResultActivity.this, bookList,
+//					R.layout.activity_search_result_listitem, new String[] { TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER }, 
+//					new int[] { R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN }
+//			);
+//
+//			setListAdapter(adapter);
+		}
+		
+		public Bitmap loadBitmap(String URL, BitmapFactory.Options options) {
+			Bitmap bitmap = null;
+			InputStream in = null;
+			try {
+				in = OpenHttpConnection(URL);
+				bitmap = BitmapFactory.decodeStream(in, null, options); // methodenaufruf
+																		// OpenHttpConnection
+				in.close();
+			} catch (IOException e1) {
+			}
+			return bitmap;
+		}
+		
+		private InputStream OpenHttpConnection(String strURL)
+				throws IOException {
+			InputStream inputStream = null;
+			URL url = new URL(strURL);
+			URLConnection conn = url.openConnection();
+
+			try {
+				HttpURLConnection httpConn = (HttpURLConnection) conn;
+				httpConn.setRequestMethod("GET");
+				httpConn.connect();
+
+				if (httpConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+					inputStream = httpConn.getInputStream();
+				}
+			} catch (Exception ex) {
+			}
+			return inputStream;
 		}
 	}
 }

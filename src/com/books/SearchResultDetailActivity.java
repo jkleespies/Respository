@@ -38,6 +38,7 @@ public class SearchResultDetailActivity extends Activity {
 	private static final String TAG_TITLE = "title";
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_IDENTIFIER = "identifiers";
+	private static final String TAG_THUMBNAIL = "thumbnail";
 	private ImageView add;
 	private Button nextLibrary;
 	private SQLiteDatabase mDatenbank;
@@ -48,7 +49,7 @@ public class SearchResultDetailActivity extends Activity {
 	private String description="";
     private String identifiers="";
 	private String imageName;
-	Bitmap bm;
+	private Bitmap imageBitmap;
 	private byte[] img = null;
 	
 	@Override
@@ -67,22 +68,21 @@ public class SearchResultDetailActivity extends Activity {
         title = in.getStringExtra(TAG_TITLE);
         description = in.getStringExtra(TAG_DESCRIPTION);
         identifiers = in.getStringExtra(TAG_IDENTIFIER);
+        imageBitmap = in.getParcelableExtra(TAG_THUMBNAIL);
         
 		// TESTWEISE EIN BILD ALS BITMAP ERHALTEN UND SPEICHERN
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-		.permitAll().build();
-		StrictMode.setThreadPolicy(policy);
-        String url = "http://bks4.books.google.de/books?id=JrsJX4dzXB0C&printsec=frontcover&img=1&zoom=1&source=gbs_api";
-		BitmapFactory.Options bmOptions;
-		bmOptions = new BitmapFactory.Options();
-		bmOptions.inSampleSize = 1;
-		bm = loadBitmap(url, bmOptions);
-        ImageView lblImage = (ImageView) findViewById(R.id.SearchResultDetailActivity_BildLabel);
-        lblImage.setImageBitmap(bm);
+//		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+//		.permitAll().build();
+//		StrictMode.setThreadPolicy(policy);
+//        String url = "http://bks4.books.google.de/books?id=JrsJX4dzXB0C&printsec=frontcover&img=1&zoom=1&source=gbs_api";
+//		BitmapFactory.Options bmOptions;
+//		bmOptions = new BitmapFactory.Options();
+//		bmOptions.inSampleSize = 1;
+//		imageBitmap = loadBitmap(url, bmOptions);
+//        ImageView lblImage = (ImageView) findViewById(R.id.SearchResultDetailActivity_BildLabel);
+//        lblImage.setImageBitmap(imageBitmap);
         
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
-		img = bos.toByteArray();
+
 
          //	Ausgabe der Werte
         TextView lblAuthor = (TextView) findViewById(R.id.SearchResultDetailActivity_AutorLabel);
@@ -90,16 +90,17 @@ public class SearchResultDetailActivity extends Activity {
         TextView lblDescription = (TextView) findViewById(R.id.SearchResultDetailActivity_InhaltLabel);
         lblDescription.setMovementMethod(new ScrollingMovementMethod());
         TextView lblIsbn = (TextView) findViewById(R.id.SearchResultDetailActivity_ISBNLabel); 
+        ImageView lblImage = (ImageView) findViewById(R.id.SearchResultDetailActivity_BildLabel);
 
-       
-        
         lblAuthor.setText(authors);
         lblTitle.setText(title);
         lblDescription.setText(description);
         lblIsbn.setText(identifiers);
+        lblImage.setImageBitmap(imageBitmap);
         
-    
-        
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
+		img = bos.toByteArray();
         
 		add = (ImageView) findViewById(R.id.SearchResultDetailActivity_Hinzufuegen);
 		add.setOnClickListener(new View.OnClickListener() { // Button
@@ -136,12 +137,13 @@ public class SearchResultDetailActivity extends Activity {
 				FileOutputStream fos = null;
 				try {
 					fos = new FileOutputStream(mypath);
-					bm.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+					imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
 					fos.close();
 				} catch (Exception e){
 					e.printStackTrace();
 				}
 				
+				Log.d("IMAGE_NAME", imageName);
 				ContentValues werte = new ContentValues();
 				// Werte die in die Datenbank geschrieben werden sollen			
 				werte.put("title", title);

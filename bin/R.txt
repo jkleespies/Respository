@@ -65,12 +65,11 @@ int drawable ic_plusone_medium_off_client 0x7f02001f
 int drawable ic_plusone_small_off_client 0x7f020020
 int drawable ic_plusone_standard_off_client 0x7f020021
 int drawable ic_plusone_tall_off_client 0x7f020022
-int drawable image_bg 0x7f020023
-int drawable important 0x7f020024
-int drawable list_selector 0x7f020025
-int drawable loader 0x7f020026
-int drawable location 0x7f020027
-int drawable location_place 0x7f020028
+int drawable important 0x7f020023
+int drawable list_selector 0x7f020024
+int drawable loader 0x7f020025
+int drawable location 0x7f020026
+int drawable location_place 0x7f020027
 int id FavoriteActivity_Autor 0x7f050015
 int id FavoriteActivity_Bild 0x7f050013
 int id FavoriteActivity_Favoriten 0x7f050006
