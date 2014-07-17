@@ -12,15 +12,15 @@
     <string name="favorite">Favorites</string>
 
     <!-- Favorite Activity -->
-    <string name="FavoriteActivity_Titel">Titel</string>
-    <string name="author">author</string>
+    <string name="title">Title</string>
+    <string name="author">Author</string>
     <string name="FavoriteActivity_NoFavoriteExist">Zur Zeit sind noch keine Favoriten vorhanden.</string>
     <string name="FavoriteActivity_Favoriten">Ihre Favoriten:</string>
     <string name="isbn">isbn</string>
 
 
     <!-- Favorite Detail Activity -->
-    <string name="FavoriteDetailActivity_Loeschen">Löschen</string>
+    <string name="delete">delete</string>
     <string name="FavoriteDetailActivity_Titel">Titel</string>
     <string name="FavoriteDetailActivity_Autor">Author</string>
     <string name="FavoriteDetailActivity_ISBN">ISBN</string>

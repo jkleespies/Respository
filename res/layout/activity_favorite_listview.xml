@@ -29,7 +29,7 @@
         android:layout_alignTop="@+id/thumbnail"
         android:layout_marginLeft="16dp"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="@string/FavoriteActivity_Titel"
+        android:text="@string/title"
         android:textSize="18sp" />
 
     <TextView
