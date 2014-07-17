@@ -34,6 +34,6 @@
         android:layout_alignBottom="@+id/SearchResultActivity_Suche"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
-        android:text="@string/search" />
+        android:text="@string/searchPhrase" />
 
 </RelativeLayout>

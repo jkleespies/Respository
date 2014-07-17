@@ -123,13 +123,20 @@ public class FavoriteActivity extends ListActivity {
 		}
 
 		ListAdapter adapter = new ExtendedSimpleAdapter(
+//				FavoriteActivity.this,
+//				FavoriteList,
+//				R.layout.activity_favorite_listview,
+//				new String[] { TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE },
+//				new int[] { R.id.FavoriteActivity_Titel,
+//						R.id.FavoriteActivity_Autor,
+//						R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild });
 				FavoriteActivity.this,
 				FavoriteList,
-				R.layout.activity_favorite_listview,
+				R.layout.listitem,
 				new String[] { TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE },
-				new int[] { R.id.FavoriteActivity_Titel,
-						R.id.FavoriteActivity_Autor,
-						R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild });
+				new int[] { R.id.title,
+						R.id.author,
+						R.id.isbn, R.id.image });
 
 		setListAdapter(adapter);
 
@@ -154,13 +161,13 @@ public class FavoriteActivity extends ListActivity {
 		super.onListItemClick(l, v, position, id);
 
 		// get values from ListView
-		String titel = ((TextView) v.findViewById(R.id.FavoriteActivity_Titel))
+		String titel = ((TextView) v.findViewById(R.id.title))
 				.getText().toString();
-		String autor = ((TextView) v.findViewById(R.id.FavoriteActivity_Autor))
+		String autor = ((TextView) v.findViewById(R.id.author))
 				.getText().toString();
-		String isbn = ((TextView) v.findViewById(R.id.FavoriteActivity_ISBN))
+		String isbn = ((TextView) v.findViewById(R.id.isbn))
 				.getText().toString();
-		ImageView image = ((ImageView) v.findViewById(R.id.FavoriteActivity_Bild));
+		ImageView image = ((ImageView) v.findViewById(R.id.image));
 
 		// save image
 		image.buildDrawingCache();
@@ -211,20 +218,33 @@ public class FavoriteActivity extends ListActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.favorite, menu);
+		getMenuInflater().inflate(R.menu.menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		// initialize Intent 
+		Intent i;
+		// Switch case between buttons, start activities 
+		switch (item.getItemId()){
+		case R.id.search:
+			i = new Intent(getApplicationContext(), SearchActivity.class);
+			startActivity(i);
+			break;
+		case R.id.map:
+			i = new Intent(getApplicationContext(), MapActivity.class);
+			startActivity(i);
+			break;
+		case R.id.favorite:
+			i = new Intent(getApplicationContext(), FavoriteActivity.class);
+			startActivity(i);
+			break;
+		default:
+			Log.d("onOptionsItemSelected", "es wurde nichts aufgewählt");
 		}
-		return super.onOptionsItemSelected(item);
+			return super.onOptionsItemSelected(item);
+		
 	}
 
 }

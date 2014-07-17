@@ -4,6 +4,9 @@ package com.books;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,6 +57,38 @@ public class SearchActivity extends Activity {
 	    	i.putExtra("searchfor", returnValue);
 	    	startActivity(i);
 	    }
-	 
 
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+
+			// Inflate the menu; this adds items to the action bar if it is present.
+			getMenuInflater().inflate(R.menu.menu, menu);
+			return true;
+		}
+
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			// initialize Intent 
+			Intent i;
+			// Switch case between buttons, start activities 
+			switch (item.getItemId()){
+			case R.id.search:
+				i = new Intent(getApplicationContext(), SearchActivity.class);
+				startActivity(i);
+				break;
+			case R.id.map:
+				i = new Intent(getApplicationContext(), MapActivity.class);
+				startActivity(i);
+				break;
+			case R.id.favorite:
+				i = new Intent(getApplicationContext(), FavoriteActivity.class);
+				startActivity(i);
+				break;
+			default:
+				Log.d("onOptionsItemSelected", "es wurde nichts aufgewählt");
+			}
+				return super.onOptionsItemSelected(item);
+			
+		}
+	 
 }

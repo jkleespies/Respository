@@ -19,12 +19,15 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -308,4 +311,36 @@ public class MapActivity extends Activity implements LocationListener {
 		}
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// initialize Intent 
+		Intent i;
+		// Switch case between buttons, start activities 
+		switch (item.getItemId()){
+		case R.id.search:
+			i = new Intent(getApplicationContext(), SearchActivity.class);
+			startActivity(i);
+			break;
+		case R.id.map:
+			i = new Intent(getApplicationContext(), MapActivity.class);
+			startActivity(i);
+			break;
+		case R.id.favorite:
+			i = new Intent(getApplicationContext(), FavoriteActivity.class);
+			startActivity(i);
+			break;
+		default:
+			Log.d("onOptionsItemSelected", "es wurde nichts aufgewählt");
+		}
+			return super.onOptionsItemSelected(item);
+		
+	}
 }

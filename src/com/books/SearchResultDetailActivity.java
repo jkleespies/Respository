@@ -15,6 +15,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -155,5 +157,37 @@ public class SearchResultDetailActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mDatenbank.close();
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// initialize Intent 
+		Intent i;
+		// Switch case between buttons, start activities 
+		switch (item.getItemId()){
+		case R.id.search:
+			i = new Intent(getApplicationContext(), SearchActivity.class);
+			startActivity(i);
+			break;
+		case R.id.map:
+			i = new Intent(getApplicationContext(), MapActivity.class);
+			startActivity(i);
+			break;
+		case R.id.favorite:
+			i = new Intent(getApplicationContext(), FavoriteActivity.class);
+			startActivity(i);
+			break;
+		default:
+			Log.d("onOptionsItemSelected", "es wurde nichts aufgewählt");
+		}
+			return super.onOptionsItemSelected(item);
+		
 	}
 }

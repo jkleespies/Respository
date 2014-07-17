@@ -8,9 +8,6 @@
     android:paddingLeft="10sp"
     android:paddingRight="10sp" >
 
-    <!--	Grundgerüst eines einzelnen Items für die ListView in der	-->
-	<!--	search_result_activity.xml									-->
-
     <!--	Bild (an der Linken Seite) mit weißem Hintergrundbild	-->  
 	<LinearLayout
 	    android:id="@+id/thumbnail"
@@ -22,7 +19,7 @@
 	    android:layout_marginRight="5dip" >
 
 	    <ImageView
-	        android:id="@+id/SearchResultActivity_Bild"
+	        android:id="@+id/image"
 	        android:contentDescription="@string/picture"
 			android:layout_width="45dip"
 		    android:layout_height="50dip"
@@ -32,10 +29,10 @@
 
 	<!--	Buchtitel	-->
     <TextView
-        android:id="@+id/SearchResultActivity_Titel"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/SearchResultActivity_Autor"
+        android:layout_alignRight="@+id/author"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
         android:textColor="#040404"
@@ -45,34 +42,30 @@
 
 	<!--	Autor	-->
     <TextView
-        android:id="@+id/SearchResultActivity_Autor"
+        android:id="@+id/author"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/SearchResultActivity_Titel"
+        android:layout_below="@id/title"
         android:textColor="#343434"
         android:textSize="12sp"
         android:layout_marginTop="1dip"
         android:layout_toRightOf="@+id/thumbnail" />
 
-	<!--	Preis	-->
-
     <!-- 	not visible	-->
     <TextView
-        android:id="@+id/SearchResultActivity_Inhalt"
+        android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#FFFFFF"
         android:layout_alignBottom="@+id/thumbnail"
-        android:layout_alignLeft="@+id/SearchResultActivity_Autor"
-
- />
+        android:layout_alignLeft="@+id/author"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@+id/SearchResultActivity_ISBN"
+        android:id="@+id/isbn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/SearchResultActivity_Inhalt"
-        android:layout_below="@+id/SearchResultActivity_Autor"
+        android:layout_above="@+id/description"
+        android:layout_below="@+id/author"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="@string/isbn"

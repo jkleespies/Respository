@@ -2,21 +2,14 @@
 <resources>
 
     <string name="app_name">Books</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Einstellungen</string>
-    <string name="StartActivity_Suche">Suche</string>
-    <string name="StartActivity_Buecherei">Bücherei in Ihrer Nähe</string>
-    <string name="StartActivity_Favoriten">Favoriten</string>
-    
+
     <string name="wait">Please wait</string>
     <string name="ServiceNotAvailable">Sorry, request is not available.</string>
     <string name="picture">Image</string>
-    <string name="search">Search: </string>
-
-    <!-- Überschriften der einzelnen Activities -->
-    <string name="title_activity_favorite_detail">Favoriten Detailansichty</string>
-    <string name="title_activity_favorite">Favoriten</string>
-    <string name="title_activity_search_result_detail">SearchResultDetailActivity</string>
+    <string name="searchPhrase">Search: </string>
+    <string name="search">Search</string>
+    <string name="map">Map</string>
+    <string name="favorite">Favorites</string>
 
     <!-- Favorite Activity -->
     <string name="FavoriteActivity_Titel">Titel</string>
@@ -24,6 +17,7 @@
     <string name="FavoriteActivity_NoFavoriteExist">Zur Zeit sind noch keine Favoriten vorhanden.</string>
     <string name="FavoriteActivity_Favoriten">Ihre Favoriten:</string>
     <string name="isbn">isbn</string>
+
 
     <!-- Favorite Detail Activity -->
     <string name="FavoriteDetailActivity_Loeschen">Löschen</string>
@@ -48,7 +42,6 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="scan">Scan</string>
     <string name="title_activity_scanner">Scanner</string>
-    <string name="map">Map</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_search_result_activty">SearchResultActivty</string>
     <string name="title_activity_single_book">SingleBookActivity</string>

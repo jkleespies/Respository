@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -94,19 +96,19 @@ public class SearchResultActivity extends ListActivity {
 						int position, long id) {
 					// get values from ListView
 					String authors = ((TextView) view
-							.findViewById(R.id.SearchResultActivity_Autor))
+							.findViewById(R.id.author))
 							.getText().toString();
 					String title = ((TextView) view
-							.findViewById(R.id.SearchResultActivity_Titel))
+							.findViewById(R.id.title))
 							.getText().toString();
 					String description = ((TextView) view
-							.findViewById(R.id.SearchResultActivity_Inhalt))
+							.findViewById(R.id.description))
 							.getText().toString();
 					String identifier = ((TextView) view
-							.findViewById(R.id.SearchResultActivity_ISBN))
+							.findViewById(R.id.isbn))
 							.getText().toString();
 					ImageView image = (ImageView) view
-							.findViewById(R.id.SearchResultActivity_Bild);
+							.findViewById(R.id.image);
 					// save image
 					image.buildDrawingCache();
 					// initialize Bitmap
@@ -251,14 +253,14 @@ public class SearchResultActivity extends ListActivity {
 
 			ListAdapter adapter = new ExtendedSimpleAdapter(
 					SearchResultActivity.this, bookList,
-					R.layout.activity_search_result_listitem, new String[] {
+					R.layout.listitem, new String[] {
 							TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION,
 							TAG_IDENTIFIER, TAG_THUMBNAIL }, new int[] {
-							R.id.SearchResultActivity_Autor,
-							R.id.SearchResultActivity_Titel,
-							R.id.SearchResultActivity_Inhalt,
-							R.id.SearchResultActivity_ISBN,
-							R.id.SearchResultActivity_Bild });
+							R.id.author,
+							R.id.title,
+							R.id.description,
+							R.id.isbn,
+							R.id.image });
 			setListAdapter(adapter);
 		}
 
@@ -281,5 +283,37 @@ public class SearchResultActivity extends ListActivity {
 			}
 			return bitmap;
 		}
+	}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// initialize Intent 
+		Intent i;
+		// Switch case between buttons, start activities 
+		switch (item.getItemId()){
+		case R.id.search:
+			i = new Intent(getApplicationContext(), SearchActivity.class);
+			startActivity(i);
+			break;
+		case R.id.map:
+			i = new Intent(getApplicationContext(), MapActivity.class);
+			startActivity(i);
+			break;
+		case R.id.favorite:
+			i = new Intent(getApplicationContext(), FavoriteActivity.class);
+			startActivity(i);
+			break;
+		default:
+			Log.d("onOptionsItemSelected", "es wurde nichts aufgewählt");
+		}
+			return super.onOptionsItemSelected(item);
+		
 	}
 }

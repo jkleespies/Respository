@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:gravity="top|bottom|left|center_vertical|center_horizontal"
-        android:text="@string/StartActivity_Suche" />
+        android:text="@string/search" />
 
     <Button
         android:id="@+id/StartActivity_Buecherei"
@@ -27,7 +27,7 @@
         android:gravity="top|bottom|left|center_vertical|center_horizontal"
         android:height="48dip"
         android:minHeight="24dip"
-        android:text="@string/StartActivity_Buecherei" />
+        android:text="@string/nextLibrary" />
 
     <Button
         android:id="@+id/StartActivity_Favoriten"
@@ -37,7 +37,7 @@
         android:layout_below="@+id/StartActivity_Buecherei"
         android:layout_marginTop="40dp"
         android:gravity="top|bottom|left|center_vertical|center_horizontal"
-        android:text="@string/StartActivity_Favoriten" />
+        android:text="@string/favorite" />
 
 </RelativeLayout>
 
