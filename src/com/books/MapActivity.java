@@ -1,3 +1,4 @@
+// create map add marker with current position and show nearby places
 package com.books;
 
 import java.io.BufferedReader;
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -54,6 +56,10 @@ public class MapActivity extends Activity implements LocationListener {
 	private final int MAX_PLACES = 20;//most returned from google
 	//marker options
 	private MarkerOptions[] places;
+	protected MapFragment mapFragment;
+	// searchphrase
+	String types = "book_store|library";
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +70,33 @@ public class MapActivity extends Activity implements LocationListener {
 		userIcon = R.drawable.location;
 		shopIcon = R.drawable.location_place;
 
-		//find out if we already have it
-		if(theMap==null){
-			//get the map
-			theMap = ((MapFragment)getFragmentManager().findFragmentById(R.id.the_map)).getMap();
-			//check in case map/ Google Play services not available
-			if(theMap!=null){
-				//ok - proceed
-				theMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-				//create marker array
-				placeMarkers = new Marker[MAX_PLACES];
-				//update location
-				updatePlaces();
-			}
-
+		mapFragment = MapFragment.newInstance();
+		getFragmentManager().beginTransaction()
+			.add(R.id.the_map, mapFragment)
+			.commit();
+		
+	
+		try {
+		types = URLEncoder.encode(types, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
 		}
+	}
+	
+	protected void onStart(){
+		super.onStart();
+		
+		//find out if we already have it
+				if(theMap==null){
+					theMap = mapFragment.getMap();
+					// set MapType, place markers
+						theMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+						placeMarkers = new Marker[MAX_PLACES];
+						// call method updatePlaces 
+						updatePlaces();
+
+				}
 	}
 	
 	//location listener functions
@@ -120,22 +138,14 @@ public class MapActivity extends Activity implements LocationListener {
 		userMarker = theMap.addMarker(new MarkerOptions()
 		.position(lastLatLng)
 		.title("You are here")
-		.icon(BitmapDescriptorFactory.fromResource(userIcon))
-		.snippet("Your last recorded location"));
+		.icon(BitmapDescriptorFactory.fromResource(userIcon)));
 		//move to location
-		theMap.animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
-		
-		//build places query string
-		//String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/
-		//"+"json?location="+lat+","+lng+"&radius=1000&sensor=true"+"&types=book_store|library"+"&key=AIzaSyBt4UwId11OPjLA5jjnNuTAvJ-d-1FbAFM";
-		
-		String types = "book_store|library";
-		try {
-		types = URLEncoder.encode(types, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-		}
+		CameraPosition cameraPosition = new CameraPosition.Builder()
+			.target(lastLatLng)
+			.zoom(15)
+			.tilt(45).build();
+			
+		theMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 		
 		String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
 		"json?location="+lat+","+lng+

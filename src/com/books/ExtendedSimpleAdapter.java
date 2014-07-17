@@ -1,7 +1,8 @@
+// insert content into ListView 
+// handle Bitmap
 package com.books;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -54,11 +55,9 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
 
 
 	private void bindView(int position, View view) {
-	    final Map dataSet = map.get(position);
-	    if (dataSet == null) {
-	        return;
-	    }
 
+	     HashMap<String, Object> dataSet = map.get(position);
+	    
 	    final ViewBinder binder = super.getViewBinder();
 	    final int count = to.length;
 
@@ -81,8 +80,6 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
 	                    if (data instanceof Boolean) {
 	                        ((Checkable) v).setChecked((Boolean) data);
 	                    } else if (v instanceof TextView) {
-	                        // Note: keep the instanceof TextView check at the bottom of these
-	                        // ifs since a lot of views are TextViews (e.g. CheckBoxes).
 	                        setViewText((TextView) v, text);
 	                    } else {
 	                        throw new IllegalStateException(v.getClass().getName() +
@@ -90,8 +87,6 @@ public class ExtendedSimpleAdapter extends SimpleAdapter{
 	                                (data == null ? "<unknown type>" : data.getClass()));
 	                    }
 	                } else if (v instanceof TextView) {
-	                    // Note: keep the instanceof TextView check at the bottom of these
-	                    // ifs since a lot of views are TextViews (e.g. CheckBoxes).
 	                    setViewText((TextView) v, text);
 	                } else if (v instanceof ImageView) {
 	                    if (data instanceof Integer) {

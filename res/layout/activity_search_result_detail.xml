@@ -2,21 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_image"
     android:gravity="left"
-    android:orientation="horizontal"
-    android:background="@drawable/background_image" >
+    android:orientation="horizontal" >
 
     <!-- Detailiertes Suchergebnis eines einzelnen ausgewählten Buches -->
     <!-- wird beim klicken auf ein Item in der Suchergebnisliste ListView -->
     <!-- ausgeführt und enthält mehr Details zu dem jeweiligen Buch -->
 
+
     <!-- Button zum Hinzufügen -->
+
 
     <!-- Autor Label -->
 
+
     <!-- Titel Label -->
 
+
     <!-- Bild Label -->
+
     <ImageView
         android:id="@+id/SearchResultDetailActivity_BildLabel"
         android:layout_width="100dip"
@@ -24,25 +29,22 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"/>
-       <!--  android:src="@drawable/brecht" --> 
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/picture" />
+    <!-- android:src="@drawable/brecht" -->
+
 
     <!-- Inhalt Label -->
-	<FrameLayout
+
+    <FrameLayout
         android:id="@+id/frameLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/searchResultDetailActivity_BildLabel"
-        android:layout_below="@+id/searchResultDetailActivity_BildLabel"
         android:layout_marginTop="24dp" >
     </FrameLayout>
 
     <!-- Button zur nächsten Bücherei (Maps) -->
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-	</FrameLayout>
 
     <TextView
         android:id="@+id/SearchResultDetailActivity_AutorLabel"
@@ -51,9 +53,9 @@
         android:layout_below="@+id/SearchResultDetailActivity_TitelLabel"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="10dp"
-        android:text="Autor"
+        android:text="@string/author"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="15dip" />
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/SearchResultDetailActivity_TitelLabel"
@@ -61,53 +63,53 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="80dp"
-        android:textStyle="bold"
-        android:textSize="20dip"
-        android:text="@string/FavoriteDetailActivity_Titel" />
+        android:text="@string/FavoriteDetailActivity_Titel"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-  	<TextView
-  	    android:id="@+id/SearchResultDetailActivity_ISBNLabel"
-  	    android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/SearchResultDetailActivity_ISBNLabel"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/SearchResultDetailActivity_AutorLabel"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="20dp"
-  	    android:text="ISBN" />
+        android:text="@string/isbn" />
 
-  	<Button
-  	    android:id="@+id/SearchResultDetailActivity_Buecherei"
-  	    android:layout_width="wrap_content"
-  	    android:layout_height="wrap_content"
-  	    
-  	    android:layout_alignParentBottom="true"
-  	    android:layout_alignParentRight="true"
-  	    android:layout_marginBottom="20dp"
-  	    android:layout_marginRight="24dp"
-  	    android:text="nächste Bücherei"
-  	    android:textSize="15dip" />
+    <Button
+        android:id="@+id/SearchResultDetailActivity_Buecherei"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="24dp"
+        android:text="@string/nextLibrary"
+        android:textSize="15sp" />
 
-  	<ImageButton
-  	    android:id="@+id/SearchResultDetailActivity_Hinzufuegen"
-  	    android:layout_width="wrap_content"
-  	    android:layout_height="wrap_content"
-  	    android:layout_alignParentTop="true"
-  	    android:layout_alignParentRight="true"
-  	    android:layout_marginRight="24dp"
-  	    android:layout_marginTop="10dp"
-  	    android:src="@drawable/important"
-  	    android:textSize="15dip" />
+    <ImageButton
+        android:contentDescription="@string/picture"
+        android:id="@+id/SearchResultDetailActivity_Hinzufuegen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/important"
+        android:textSize="15sp" />
 
-  	<TextView
-  	    android:id="@+id/SearchResultDetailActivity_InhaltLabel"
-  	    android:layout_width="wrap_content"
-  	    android:layout_height="wrap_content"
-  	    android:layout_marginTop="15dp"
-		android:layout_below="@+id/SearchResultDetailActivity_ISBNLabel"
-		android:layout_above="@+id/SearchResultDetailActivity_Buecherei"
+    <TextView
+        android:id="@+id/SearchResultDetailActivity_InhaltLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/SearchResultDetailActivity_Buecherei"
         android:layout_alignLeft="@+id/SearchResultDetailActivity_BildLabel"
         android:layout_alignRight="@+id/SearchResultDetailActivity_Buecherei"
-  	    android:text="Bücherinhalt"
-  	    android:maxLines="100"
-        android:scrollbars = "vertical" />
+        android:layout_below="@+id/SearchResultDetailActivity_ISBNLabel"
+        android:layout_marginTop="15dp"
+        android:maxLines="100"
+        android:scrollbars="vertical"
+        android:text="@string/description" />
 
 </RelativeLayout>

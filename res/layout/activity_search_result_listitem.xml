@@ -23,6 +23,7 @@
 
 	    <ImageView
 	        android:id="@+id/SearchResultActivity_Bild"
+	        android:contentDescription="@string/picture"
 			android:layout_width="45dip"
 		    android:layout_height="50dip"
 		   />
@@ -37,9 +38,8 @@
         android:layout_alignRight="@+id/SearchResultActivity_Autor"
         android:layout_alignTop="@+id/thumbnail"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Der gute Mensch von Sezuan"
         android:textColor="#040404"
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:typeface="sans" />
 
@@ -50,14 +50,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/SearchResultActivity_Titel"
         android:textColor="#343434"
-        android:textSize="10dip"
+        android:textSize="12sp"
         android:layout_marginTop="1dip"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:text="Bertolt Brecht" />
+        android:layout_toRightOf="@+id/thumbnail" />
 
 	<!--	Preis	-->
 
-    <!-- 	unsichtbar	-->
+    <!-- 	not visible	-->
     <TextView
         android:id="@+id/SearchResultActivity_Inhalt"
         android:layout_width="wrap_content"
@@ -65,8 +64,8 @@
         android:textColor="#FFFFFF"
         android:layout_alignBottom="@+id/thumbnail"
         android:layout_alignLeft="@+id/SearchResultActivity_Autor"
-        android:text="Test"
-        android:textSize="1sp" />
+
+ />
 
     <TextView
         android:id="@+id/SearchResultActivity_ISBN"
@@ -76,7 +75,7 @@
         android:layout_below="@+id/SearchResultActivity_Autor"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="ISBN"
-        android:textSize="10dip" />
+        android:text="@string/isbn"
+        android:textSize="1sp" />
 
 </RelativeLayout>

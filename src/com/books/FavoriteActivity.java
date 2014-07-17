@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import android.support.v4.app.Fragment;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -18,25 +16,21 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
-import android.os.Build;
+import android.widget.TextView;
 
 public class FavoriteActivity extends ListActivity {
 
+	// initialize variables
 	private SQLiteDatabase mDatenbank;
 	private DatenbankManager mHelper;
-	
+
 	private ArrayList<HashMap<String, Object>> FavoriteList;
 	private static final String TAG_ID = "_id";
 	private static final String TAG_TITLE = "title";
@@ -44,166 +38,172 @@ public class FavoriteActivity extends ListActivity {
 	private static final String TAG_ISBN = "isbn";
 	private static final String TAG_DESCRIPTION = "description";
 	private static final String TAG_IMAGE = "image";
-	private String imageName;
+	private static final String TAG_IMAGE_NAME = "image_name";
+	// private String imageName;
 	private File path;
-	private File f;
-	private Bitmap b;
+	private File file;
+	private Bitmap bitmap;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mHelper = new DatenbankManager(this);
-		setContentView(R.layout.activity_favorite);	
+		setContentView(R.layout.activity_favorite);
 
-		Button Suche = (Button) findViewById(R.id.StartActivity_Suche); // Button
-																			// für
-																			// Suche,
-																			// um
-																			// auf
-																			// die
-																			// Suchmaske
-																			// (SearchActivity)
-																			// zu
-																			// kommen
-			Suche.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent suche = new Intent(getApplicationContext(),
-							SearchActivity.class);
-					startActivity(suche);
-				}
-			});
+		// if list:empty
+		// button for start SearchActivity
+		Button Suche = (Button) findViewById(R.id.StartActivity_Suche);
+		Suche.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent suche = new Intent(getApplicationContext(),
+						SearchActivity.class);
+				startActivity(suche);
+			}
+		});
 
-			Button Buecherei = (Button) findViewById(R.id.StartActivity_Buecherei); // Button
-																					// für
-																					// nächste
-																					// Bücherei,
-																					// um
-																					// auf
-																					// LibraryMapActivity
-																					// zu
-																					// kommen
-			Buecherei.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					Intent buecherei = new Intent(getApplicationContext(),
-							MapActivity.class);
-					startActivity(buecherei);
+		// button for start MapActivity
+		Button Buecherei = (Button) findViewById(R.id.StartActivity_Buecherei);
+		Buecherei.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent buecherei = new Intent(getApplicationContext(),
+						MapActivity.class);
+				startActivity(buecherei);
 
-				}
-			});
+			}
+		});
 
-
-		// if (savedInstanceState == null) {
-		// getSupportFragmentManager().beginTransaction()
-		// }
 	}
 
+	// put content to FavoriteList
+	// show ListView with content
 	public void getBooks() {
+		// initialize FavoriteList
 		FavoriteList = new ArrayList<HashMap<String, Object>>();
-		Cursor bookCursor = mDatenbank.query("book",
-				new String[] {"_id", "title", "author", "isbn", "description", "image"},  
-				null, null, null, null, null);
+		// cursor for handling DB
+		Cursor bookCursor = mDatenbank.query("book", new String[] { "_id",
+				"title", "author", "isbn", "description", "image" }, null,
+				null, null, null, null);
+		// initialize Hashmap for book item s
 		HashMap<String, Object> item = new HashMap<String, Object>();
 		bookCursor.moveToFirst();
-		
-		for (int i = 0; i < bookCursor.getCount(); i++){
+
+		for (int i = 0; i < bookCursor.getCount(); i++) {
 			item = new HashMap<String, Object>();
 			String title = bookCursor.getString(1);
 			String author = bookCursor.getString(2);
 			String isbn = bookCursor.getString(3);
-			String description = bookCursor.getString(4);
-			String image = bookCursor.getString(5);
-			
+			// String description = bookCursor.getString(4);
+			String imageName = bookCursor.getString(5);
+
+			// open file "booksImageDir"
 			ContextWrapper cw = new ContextWrapper(getApplicationContext());
 			path = cw.getDir("booksImageDir", Context.MODE_PRIVATE);
-			f = new File(path, image);
-		
-			try{
-				b = BitmapFactory.decodeStream(new FileInputStream(f));
-				
-				item.put(TAG_IMAGE, b);
-				
-			}catch (FileNotFoundException e) {
+			file = new File(path, imageName);
+
+			// get bitmap image from file
+			try {
+				bitmap = BitmapFactory.decodeStream(new FileInputStream(file));
+
+				item.put(TAG_IMAGE, bitmap);
+
+			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
-			
+
 			item.put(TAG_TITLE, title);
 			item.put(TAG_AUTHOR, author);
 			item.put(TAG_ISBN, isbn);
-//			item.put(TAG_DESCRIPTION, description);
-			
+			// item.put(TAG_DESCRIPTION, description);
+
 			FavoriteList.add(item);
-			
+
 			bookCursor.moveToNext();
 		}
-//		ListAdapter adapter = new SimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
-//				new String[] {TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE}, 
-//				new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild});
-//		
-//		setListAdapter(adapter);
-		
-		ListAdapter adapter = new ExtendedSimpleAdapter (FavoriteActivity.this, FavoriteList, R.layout.activity_favorite_listview, 
-		new String[] {TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE}, 
-		new int[] {R.id.FavoriteActivity_Titel, R.id.FavoriteActivity_Autor, R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild});
+
+		ListAdapter adapter = new ExtendedSimpleAdapter(
+				FavoriteActivity.this,
+				FavoriteList,
+				R.layout.activity_favorite_listview,
+				new String[] { TAG_TITLE, TAG_AUTHOR, TAG_ISBN, TAG_IMAGE },
+				new int[] { R.id.FavoriteActivity_Titel,
+						R.id.FavoriteActivity_Autor,
+						R.id.FavoriteActivity_ISBN, R.id.FavoriteActivity_Bild });
 
 		setListAdapter(adapter);
-	
+
 	}
-	
-	protected void onResume() { // hier wird die Datenbank geöffnet
+
+	// open DB
+	protected void onResume() {
 		super.onResume();
 		mDatenbank = mHelper.getReadableDatabase();
 		getBooks();
 	}
 
-	protected void onDestroy() { // hier wird beim kompletten schließen der
-									// FavoriteActivity der Datenbankzugriff
-									// gelöscht
+	// close DB
+	protected void onDestroy() {
 		super.onDestroy();
 		mDatenbank.close();
 	}
 
+	// handle ListView click
 	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {	// Aktion, wenn auf Listenitem geklickt wird
+	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 
-		Cursor cursor = mDatenbank.query("book", new String[] { "_id",
-				"title", "author", "isbn", "description", "image" }, null, null, null, null, null);
+		// get values from ListView
+		String titel = ((TextView) v.findViewById(R.id.FavoriteActivity_Titel))
+				.getText().toString();
+		String autor = ((TextView) v.findViewById(R.id.FavoriteActivity_Autor))
+				.getText().toString();
+		String isbn = ((TextView) v.findViewById(R.id.FavoriteActivity_ISBN))
+				.getText().toString();
+		ImageView image = ((ImageView) v.findViewById(R.id.FavoriteActivity_Bild));
+
+		// save image
+		image.buildDrawingCache();
+		// initialize Bitmap
+		Bitmap imageBitmap = image.getDrawingCache();
+				
+		// Cursor for loading information from Database
+		Cursor cursor = mDatenbank.query("book", new String[] { "_id", "title",
+				"author", "isbn", "description", "image" }, null, null, null,
+				null, null);
 		if (cursor != null) {
 			if (cursor.moveToPosition(position)) {
-				int column = cursor.getColumnIndex("title"); // um titel aus
-				String titel = cursor.getString(column);	// liste auszulesen
-															
-				column = cursor.getColumnIndex("author");	 // um autor aus liste
-				String autor = cursor.getString(column);	// auszulesen
-								
-				column = cursor.getColumnIndex("isbn"); 	// um isbn aus liste
-				String isbn = cursor.getString(column);			// auszulesen
-								
-				column = cursor.getColumnIndex("_id");		//um _id der Spalte zu bekommen
+
+				// get id from DB
+				int column = cursor.getColumnIndex("_id");
 				Integer _id = cursor.getInt(column);
-				
+
+				// get description from DB
 				column = cursor.getColumnIndex("description");
-				String description= cursor.getString(column);
-				
+				String description = cursor.getString(column);
+
+				// get image-Name from DB
 				column = cursor.getColumnIndex("image");
-				String image = cursor.getString(column);
-				
-				// hier werden dem Intent die Werte für die
-				// FavoriteDetailActivity übergeben
-				Intent startFavoriteDetail = new Intent(getApplicationContext(),
-						FavoriteDetailActivity.class);
+				String imageName = cursor.getString(column);
+
+				Intent startFavoriteDetail = new Intent(
+						getApplicationContext(), FavoriteDetailActivity.class);
+				// insert values into Intent
 				startFavoriteDetail.putExtra(TAG_TITLE, titel);
 				startFavoriteDetail.putExtra(TAG_AUTHOR, autor);
 				startFavoriteDetail.putExtra(TAG_ISBN, isbn);
 				startFavoriteDetail.putExtra(TAG_ID, _id);
 				startFavoriteDetail.putExtra(TAG_DESCRIPTION, description);
-				startFavoriteDetail.putExtra(TAG_IMAGE, image);
+				startFavoriteDetail.putExtra(TAG_IMAGE, imageBitmap);
+				startFavoriteDetail.putExtra(TAG_IMAGE_NAME, imageName);
+				// start ActivtyFavoriteDetail
 				startActivity(startFavoriteDetail);
-				Log.d("onListItemClick aufgerufen", "Item wurde ausgwählt, es sollte FavoriteDetailActivity starten");
 
-			} // endif moveToPostition
-		} // endif cursor != null
+				Log.d("onListItemClick aufgerufen",
+						"Item wurde ausgwählt, es sollte FavoriteDetailActivity starten");
+
+			}
+		}
 
 	}
 
@@ -226,22 +226,5 @@ public class FavoriteActivity extends ListActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-//	public static class PlaceholderFragment extends Fragment {
-//
-//		public PlaceholderFragment() {
-//		}
-//
-//		@Override
-//		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//				Bundle savedInstanceState) {
-//			View rootView = inflater.inflate(R.layout.fragment_favorite,
-//					container, false);
-//			return rootView;
-//		}
-//	}
 
 }

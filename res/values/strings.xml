@@ -7,6 +7,11 @@
     <string name="StartActivity_Suche">Suche</string>
     <string name="StartActivity_Buecherei">Bücherei in Ihrer Nähe</string>
     <string name="StartActivity_Favoriten">Favoriten</string>
+    
+    <string name="wait">Please wait</string>
+    <string name="ServiceNotAvailable">Sorry, request is not available.</string>
+    <string name="picture">Image</string>
+    <string name="search">Search: </string>
 
     <!-- Überschriften der einzelnen Activities -->
     <string name="title_activity_favorite_detail">Favoriten Detailansichty</string>
@@ -15,22 +20,22 @@
 
     <!-- Favorite Activity -->
     <string name="FavoriteActivity_Titel">Titel</string>
-    <string name="FavoriteActivity_Autor">Autor</string>
+    <string name="author">author</string>
     <string name="FavoriteActivity_NoFavoriteExist">Zur Zeit sind noch keine Favoriten vorhanden.</string>
     <string name="FavoriteActivity_Favoriten">Ihre Favoriten:</string>
-    <string name="FavoriteActivity_ISBN">ISBN</string>
+    <string name="isbn">isbn</string>
 
     <!-- Favorite Detail Activity -->
     <string name="FavoriteDetailActivity_Loeschen">Löschen</string>
     <string name="FavoriteDetailActivity_Titel">Titel</string>
-    <string name="FavoriteDetailActivity_Autor">Autor</string>
+    <string name="FavoriteDetailActivity_Autor">Author</string>
     <string name="FavoriteDetailActivity_ISBN">ISBN</string>
-    <string name="FavoriteDetailActivity_Inhalt">Inhalt</string>
-    <string name="FavoriteDetailActivity_Buecherei">Bücherei in Ihrer Nähe</string>
+    <string name="description">description</string>
+    <string name="nextLibrary">Next library</string>
 
     <!-- Search Result Detail Activity -->
     <string name="SearchResultDetailActivity_Titel">Titel</string>
-    <string name="SearchResultDetailActivity_Autor">Autor</string>
+    <string name="SearchResultDetailActivity_Autor">Author</string>
     <string name="SearchResultDetailActivity_ISBN">ISBN</string>
     <string name="SearchResultDetailActivity_Hinzufuegen">Hinzufuegen</string>
     <string name ="SearchResultActivity_emptyValue">Empty</string>
@@ -43,11 +48,11 @@
     <string name="title_activity_search">SearchActivity</string>
     <string name="scan">Scan</string>
     <string name="title_activity_scanner">Scanner</string>
-    <string name="search">Buch Suchen</string>
     <string name="map">Map</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_search_result_activty">SearchResultActivty</string>
     <string name="title_activity_single_book">SingleBookActivity</string>
+    
     
     <string name="no_description_available">Leider keine Beschreibung verfügbar.</string>
 

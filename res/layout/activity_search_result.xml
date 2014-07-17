@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:text="TextView" 
-        android:textSize="15dip"
+        android:textSize="15sp"
         android:layout_toRightOf="@+id/suche"/>
     
     
@@ -35,6 +34,6 @@
         android:layout_alignBottom="@+id/SearchResultActivity_Suche"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="5dp"
-        android:text="Suche:" />
+        android:text="@string/search" />
 
 </RelativeLayout>

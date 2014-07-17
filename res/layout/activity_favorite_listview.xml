@@ -15,6 +15,7 @@
         android:padding="3dip" >
 
         <ImageView
+            android:contentDescription="@string/picture"
             android:id="@+id/FavoriteActivity_Bild"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -38,7 +39,7 @@
         android:layout_below="@+id/FavoriteActivity_Titel"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@id/thumbnail"
-        android:text="@string/FavoriteActivity_Autor" />
+        android:text="@string/author" />
 
     <TextView
         android:id="@+id/FavoriteActivity_ISBN"
@@ -47,6 +48,6 @@
         android:layout_below="@+id/FavoriteActivity_Autor"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@id/thumbnail"
-        android:text="@string/FavoriteActivity_ISBN" /> 
+        android:text="@string/isbn" /> 
 
 </RelativeLayout>

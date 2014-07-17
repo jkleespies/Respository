@@ -1,10 +1,9 @@
+// search via GoogleBooksApiRequest, get & handle JSON, display result 
+
 package com.books;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -29,16 +28,17 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchResultActivity extends ListActivity {
 
 	private ProgressDialog pDialog;
 
-	// URL für die JSON Anfrage und die Sucheingabe
+	// set variables for search
 	public String url;
 	public String search_phrase;
-	
-	// Deklaration von mehrmals benötigten Variablen
+
+	// set params
 	private static final String TAG_ITEMS = "items";
 	private static final String TAG_VOLUMEINFO = "volumeInfo";
 	private static final String TAG_TITLE = "title";
@@ -48,63 +48,73 @@ public class SearchResultActivity extends ListActivity {
 	private static final String TAG_IDENTIFIER = "identifiers";
 	private static final String TAG_IMAGELINKS = "imageLinks";
 	private static final String TAG_THUMBNAIL = "thumbnail";
-	public Bitmap bm; 
-	
-	// JSON Array initialisieren
+	public Bitmap bm;
+
+	// set JSON Array
 	JSONArray items = null;
-	
-	// Hashmap für die ListView
+
+	// Hashmap forListView
 	ArrayList<HashMap<String, Object>> bookList;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_result);
 
+		// getSearchPhrase from SearchActivity
 		Intent i = getIntent();
 		String searchPhrase = i.getExtras().getString("searchfor");
-		
-		if(searchPhrase.equals("")) {
-			TextView tv = (TextView)findViewById(R.id.SearchResultActivity_Suche);
+
+		// if SearchPhrase empty
+		if (searchPhrase.equals("")) {
+			TextView tv = (TextView) findViewById(R.id.SearchResultActivity_Suche);
 			tv.setText(getString(R.string.SearchResultActivity_emptyValue));
-		}
-		else {
-			TextView tv = (TextView)findViewById(R.id.SearchResultActivity_Suche);
-//			tv.setText(searchPhrase);	
-//			 unterstreicht die Suchphrase
-			SpannableString content = new SpannableString(searchPhrase);	
+		} else {
+			TextView tv = (TextView) findViewById(R.id.SearchResultActivity_Suche);
+			// underline Searchphrase
+			SpannableString content = new SpannableString(searchPhrase);
 			content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 			tv.setText(content);
-			
-			
-			bookList = new ArrayList<HashMap<String, Object>>();	         
-		
-			ListView lv = getListView();	
-		
-			// Suchstring an die URL anketten und die Leerzeichen durch %20 ersetzen
-			String searchurl = "https://www.googleapis.com/books/v1/volumes?q="+ searchPhrase;
+
+			// fill Hashmap
+			bookList = new ArrayList<HashMap<String, Object>>();
+			// initialize ListView
+			ListView lv = getListView();
+
+			// create SearchString, replace [] by whitespace (%20)
+			String searchurl = "https://www.googleapis.com/books/v1/volumes?q="
+					+ searchPhrase;
 			url = searchurl.replaceAll("[ ]", "%20");
-		
+
+			// set Click Listerner on ListViewItem -> start next Activity
 			lv.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					// Werte des ausgewählten ListView Items
-					String authors = ((TextView) view.findViewById(R.id.SearchResultActivity_Autor))
+					// get values from ListView
+					String authors = ((TextView) view
+							.findViewById(R.id.SearchResultActivity_Autor))
 							.getText().toString();
-					String title = ((TextView) view.findViewById(R.id.SearchResultActivity_Titel))
+					String title = ((TextView) view
+							.findViewById(R.id.SearchResultActivity_Titel))
 							.getText().toString();
-					String description = ((TextView) view.findViewById(R.id.SearchResultActivity_Inhalt))
-							.getText().toString();	
-					String identifier = ((TextView) view.findViewById(R.id.SearchResultActivity_ISBN))
+					String description = ((TextView) view
+							.findViewById(R.id.SearchResultActivity_Inhalt))
 							.getText().toString();
-					ImageView image = (ImageView)findViewById(R.id.SearchResultActivity_Bild);
+					String identifier = ((TextView) view
+							.findViewById(R.id.SearchResultActivity_ISBN))
+							.getText().toString();
+					ImageView image = (ImageView) view
+							.findViewById(R.id.SearchResultActivity_Bild);
+					// save image
 					image.buildDrawingCache();
+					// initialize Bitmap
 					Bitmap imageBitmap = image.getDrawingCache();
-					
+
 					// Starten der Detailansicht
-					Intent in = new Intent(getApplicationContext(), SearchResultDetailActivity.class);
+					Intent in = new Intent(getApplicationContext(),
+							SearchResultDetailActivity.class);
 					in.putExtra(TAG_AUTHORS, authors);
 					in.putExtra(TAG_TITLE, title);
 					in.putExtra(TAG_DESCRIPTION, description);
@@ -113,101 +123,119 @@ public class SearchResultActivity extends ListActivity {
 					startActivity(in);
 				}
 			});
-			
-			// Async task aufrufen um den JSON zu bekommen
+
+			// call Async task to get JSON
 			new GetBooks().execute();
 		}
-	}	
-	
+	}
+
 	/**
-	 * HTTP Call für den JSON Aufruf
+	 * AsyncTask Class GET HTTP Call for JSON request
 	 **/
 	private class GetBooks extends AsyncTask<Void, Void, Void> {
 
+		// async method before execute
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			// Ladebildschirm
+
+			// Loading Screen
 			pDialog = new ProgressDialog(SearchResultActivity.this);
-			pDialog.setMessage("Bitte warten...");
+			pDialog.setTitle(R.string.wait);
 			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 
+		// async method while execute
 		@Override
 		protected Void doInBackground(Void... arg0) {
 			Adapter ad = new Adapter();
 
-			// URL request und response
-			String jsonStr = ad.makeServiceCall(url, Adapter.GET);			
-			Log.d("Response: ", "> " + jsonStr);
+			// URL request and response from Adapter
+			String jsonStr = ad.makeServiceCall(url, Adapter.GET);
 
 			if (jsonStr != null) {
 				try {
 					JSONObject jsonObj = new JSONObject(jsonStr);
-					
-					// JSON Array auslesen
+
+					// read JSON Array
 					items = jsonObj.getJSONArray(TAG_ITEMS);
-					
-					// Schleifendurchlauf für die Bücher            						            	
-					for (int i = 0; i < 10; i++) {	
-						JSONObject it = items.getJSONObject(i);										
-						
-						JSONObject volumeInfo = it.getJSONObject(TAG_VOLUMEINFO);
-						String author = volumeInfo.getString("authors").replaceAll("[^a-zA-Z, ]", "");
-						String authors = author.replace("," , ", ");			
-						String title = volumeInfo.getString(TAG_TITLE);	
-						
+
+					// get book items from JSONObject
+					for (int i = 0; i < 50; i++) {
+						JSONObject it = items.getJSONObject(i);
+
+						// volumeInfo conatins content from i item
+						JSONObject volumeInfo = it
+								.getJSONObject(TAG_VOLUMEINFO);
+						// get author from volumeInfo
+						String author = volumeInfo.getString("authors")
+								.replaceAll("[^a-zA-Z, ]", "");
+						String authors = author.replace(",", ", ");
+						// get title from volumeInfo
+						String title = volumeInfo.getString(TAG_TITLE);
+						// get description from volumeInfo
 						String description = "";
 						if (volumeInfo.has(TAG_DESCRIPTION) == true) {
 							description = volumeInfo.getString(TAG_DESCRIPTION);
-						}
-						else {
+						} else // if no description available
+						{
 							description = getString(R.string.no_description_available);
 						}
-						
+
+						// identifiers contains different isbn types
+						// get types from volumeInfo
+						// get ISBN 13 or other from industryIdentifiers
 						String identifier = "";
-						JSONArray industryIdentifiers = volumeInfo.getJSONArray(TAG_INDUSTRYIDENTIFIER);
-						
-						for (int j = 0; j < industryIdentifiers.length(); j++) {			
-							JSONObject industry = industryIdentifiers.getJSONObject(j);							
-							
+						JSONArray industryIdentifiers = volumeInfo
+								.getJSONArray(TAG_INDUSTRYIDENTIFIER);
+
+						for (int j = 0; j < industryIdentifiers.length(); j++) {
+							JSONObject industry = industryIdentifiers
+									.getJSONObject(j);
+
 							if (industry.get("type").equals("ISBN_13")) {
 								identifier = industry.getString("identifier");
-							}	
-							else if (industry.get("type").equals("OTHER")) {
+							} else if (industry.get("type").equals("OTHER")) {
 								identifier = industry.getString("identifier");
 							}
 						}
-								
-						JSONObject imageLinks = volumeInfo.getJSONObject(TAG_IMAGELINKS);
-						String thumbnail = imageLinks.getString(TAG_THUMBNAIL);
-						
+
+						// get imageURL from volumeInfo
+						JSONObject imageLinks = volumeInfo
+								.getJSONObject(TAG_IMAGELINKS);
+						String thumbnailLink = imageLinks
+								.getString(TAG_THUMBNAIL);
+
+						// initialize Bitmap and bmOptions
 						BitmapFactory.Options bmOptions;
 						bmOptions = new BitmapFactory.Options();
 						bmOptions.inSampleSize = 1;
-						bm = loadBitmap(thumbnail, bmOptions);
-						
-						// Tmp Hashmap für die einzelnen Bücherdaten
+
+						// load Bitmap from method loadBitmap
+						bm = loadBitmap(thumbnailLink, bmOptions);
+
+						// initialize hasmap for handling bookitems
 						HashMap<String, Object> item = new HashMap<String, Object>();
 
-						// Einzelne Bücher der Hashmap hinzufügen
+						// add bookitems to hashmap
 						item.put(TAG_AUTHORS, authors);
 						item.put(TAG_TITLE, title);
-						item.put(TAG_DESCRIPTION, description);	
+						item.put(TAG_DESCRIPTION, description);
 						item.put(TAG_IDENTIFIER, identifier);
 						item.put(TAG_THUMBNAIL, bm);
 
-						// Buch der Buchliste hinzufügen
+						// add book item to bookList
 						bookList.add(item);
 					}
-				}
-				catch(JSONException e) {
+				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-			}
-			else {
-				Log.e("ServiceHandler", "Es konnten keine Bücher abgerufen werden");
+			} else {
+				Toast.makeText(getApplicationContext(),
+						R.string.ServiceNotAvailable, Toast.LENGTH_LONG).show();
+				Log.e("ServiceHandler",
+						"Es konnten keine Bücher abgerufen werden");
 			}
 			return null;
 		}
@@ -218,53 +246,40 @@ public class SearchResultActivity extends ListActivity {
 
 			if (pDialog.isShowing())
 				pDialog.dismiss();
-			
-			/*** Updaten der JSON Daten in die ListView */
-			
 
-			ListAdapter adapter = new ExtendedSimpleAdapter(SearchResultActivity.this, bookList, R.layout.activity_search_result_listitem,
-					new String[] {TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER, TAG_THUMBNAIL}, 
-					new int[] {R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN, R.id.SearchResultActivity_Bild});
+			/*** Updaten der JSON Daten in die ListView */
+
+			ListAdapter adapter = new ExtendedSimpleAdapter(
+					SearchResultActivity.this, bookList,
+					R.layout.activity_search_result_listitem, new String[] {
+							TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION,
+							TAG_IDENTIFIER, TAG_THUMBNAIL }, new int[] {
+							R.id.SearchResultActivity_Autor,
+							R.id.SearchResultActivity_Titel,
+							R.id.SearchResultActivity_Inhalt,
+							R.id.SearchResultActivity_ISBN,
+							R.id.SearchResultActivity_Bild });
 			setListAdapter(adapter);
-//			ListAdapter adapter = new SimpleAdapter (
-//					SearchResultActivity.this, bookList,
-//					R.layout.activity_search_result_listitem, new String[] { TAG_AUTHORS, TAG_TITLE, TAG_DESCRIPTION, TAG_IDENTIFIER }, 
-//					new int[] { R.id.SearchResultActivity_Autor, R.id.SearchResultActivity_Titel, R.id.SearchResultActivity_Inhalt, R.id.SearchResultActivity_ISBN }
-//			);
-//
-//			setListAdapter(adapter);
 		}
-		
+
 		public Bitmap loadBitmap(String URL, BitmapFactory.Options options) {
 			Bitmap bitmap = null;
 			InputStream in = null;
+			Adapter adapter = new Adapter();
+
 			try {
-				in = OpenHttpConnection(URL);
-				bitmap = BitmapFactory.decodeStream(in, null, options); // methodenaufruf
-																		// OpenHttpConnection
+				// open the URL with image
+				in = adapter.OpenHttpConnection(URL);
+
+				// URL request and response from Adapter
+				// load BitmapImage in bitmap
+				bitmap = BitmapFactory.decodeStream(in, null, options);
+
+				// close Input Stream
 				in.close();
 			} catch (IOException e1) {
 			}
 			return bitmap;
-		}
-		
-		private InputStream OpenHttpConnection(String strURL)
-				throws IOException {
-			InputStream inputStream = null;
-			URL url = new URL(strURL);
-			URLConnection conn = url.openConnection();
-
-			try {
-				HttpURLConnection httpConn = (HttpURLConnection) conn;
-				httpConn.setRequestMethod("GET");
-				httpConn.connect();
-
-				if (httpConn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-					inputStream = httpConn.getInputStream();
-				}
-			} catch (Exception ex) {
-			}
-			return inputStream;
 		}
 	}
 }
