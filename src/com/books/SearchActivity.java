@@ -26,8 +26,8 @@ public class SearchActivity extends Activity {
 	@Override
 	public void onClick(View v) {
 		
-	Intent intent = new Intent(getApplicationContext(),	ZBarScannerActivity.class);
-	startActivityForResult(intent, 0);
+//	Intent intent = new Intent(getApplicationContext(),	ZBarScannerActivity.class);
+//	startActivityForResult(intent, 0);
 	}
 	});
 
@@ -64,14 +64,14 @@ public class SearchActivity extends Activity {
 	// data.getStringExtra(ZBarConstants.SCAN_RESULT)
 	// Type of the scan result is available by making a call to
 	// data.getStringExtra(ZBarConstants.SCAN_RESULT_TYPE)
-	Toast.makeText(	this,"Scan Result = "+ data.getStringExtra(ZBarConstants.SCAN_RESULT),Toast.LENGTH_SHORT).show();
-	String returnValue = data.getStringExtra(ZBarConstants.SCAN_RESULT);
-
-	Intent i = new Intent(getApplicationContext(),
-	SearchResultActivity.class);
-	i.putExtra("searchfor", returnValue);
-
-	startActivity(i);
+//	Toast.makeText(	this,"Scan Result = "+ data.getStringExtra(ZBarConstants.SCAN_RESULT),Toast.LENGTH_SHORT).show();
+//	String returnValue = data.getStringExtra(ZBarConstants.SCAN_RESULT);
+//
+//	Intent i = new Intent(getApplicationContext(),
+//	SearchResultActivity.class);
+//	i.putExtra("searchfor", returnValue);
+//
+//	startActivity(i);
 
 	// The value of type indicates one of the symbols listed in Advanced
 	// Options below.
