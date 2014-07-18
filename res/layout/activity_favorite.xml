@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.books.StartActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/background_image">
 
     <!-- vllt muss in der listview android:list genutzt werden -->
 
@@ -22,6 +23,8 @@
         android:id="@+id/android:list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:dividerHeight="1dp"
+       	android:listSelector="@drawable/list_selector"
         android:layout_below="@+id/FavoriteActivity_Favoriten" >
     </ListView>
 
@@ -50,7 +53,7 @@
             android:gravity="top|bottom|left|center_vertical|center_horizontal"
             android:height="48dip"
             android:minHeight="24dip"
-            android:text="@string/StartActivity_Suche" />
+            android:text="@string/search" />
 
         <Button
             android:id="@+id/StartActivity_Buecherei"
@@ -62,7 +65,7 @@
             android:gravity="top|bottom|left|center_vertical|center_horizontal"
             android:height="48dip"
             android:minHeight="24dip"
-            android:text="@string/StartActivity_Buecherei" />
+            android:text="@string/nextLibrary" />
     </RelativeLayout>
 
 </RelativeLayout>

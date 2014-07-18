@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.mybook.SearchActivity"
-    tools:ignore="MergeRootFrame" > 
-  
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/background_image">
+
     <Button
         android:id="@+id/searchActivity_scanner"
         android:layout_width="wrap_content"
@@ -14,8 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp"
         android:text="Scanner"
-        android:width="150dp" /> 
-  
+        android:width="150dp" />
+
     <Button
         android:id="@+id/searchActivity_search"
         android:layout_width="wrap_content"
@@ -24,8 +25,8 @@
         android:layout_below="@+id/searchActivity_scanner"
         android:layout_marginTop="130dp"
         android:text="Suchen"
-        android:width="150dp" /> 
-  
+        android:width="150dp" />
+
     <EditText
         android:id="@+id/searchActivity_input_field"
         android:layout_width="wrap_content"
@@ -34,9 +35,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp"
         android:ems="10"
-        android:width="300dp" > 
-  
-        <requestFocus /> 
-    </EditText> 
-  
+        android:width="300dp" >
+
+        <requestFocus />
+    </EditText>
+
 </RelativeLayout>

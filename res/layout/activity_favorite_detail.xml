@@ -5,26 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.books.FavoriteDetailActivity"
-    tools:ignore="MergeRootFrame" >
+    tools:ignore="MergeRootFrame" 
+    android:background="@drawable/background_image">
 
     <ImageView
         android:id="@+id/FavoriteDetailActivity_Bild"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/ic_drawer" />
+        android:layout_marginTop="30dp"
+         />
 
     <ImageButton
         android:id="@+id/FavoriteDetailActivity_Loeschen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="24dp"
-        android:layout_marginTop="10dp"
+  	    android:layout_width="wrap_content"
+  	    android:layout_height="wrap_content"
+  	    android:layout_alignParentTop="true"
+  	    android:layout_alignParentRight="true"
+  	    android:layout_marginRight="24dp"
+  	    android:layout_marginTop="10dp"
         android:src="@android:drawable/ic_menu_delete" />
 
 
@@ -32,45 +33,54 @@
         android:id="@+id/FavoriteDetailActivity_Titel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="65dp"
-        android:text="@string/FavoriteDetailActivity_Titel" />
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="80dp"
+        android:textStyle="bold"
+        android:textSize="20dip"
+        android:text="@string/FavoriteDetailActivity_Titel" 
+        />
 
     <TextView
         android:id="@+id/FavoriteDetailActivity_Autor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/FavoriteDetailActivity_Titel"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15dip"
         android:text="@string/FavoriteDetailActivity_Autor" />
 
-    <TextView
+     <TextView
         android:id="@+id/FavoriteDetailActivity_ISBN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/FavoriteDetailActivity_Autor"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/FavoriteDetailActivity_ISBN" />
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/FavoriteDetailActivity_ISBN" />  
 
     <TextView
         android:id="@+id/FavoriteDetailActivity_Inhalt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/FavoriteDetailActivity_Bild"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:text="@string/FavoriteDetailActivity_Inhalt" />
-    
+  	    android:layout_height="wrap_content"
+  	    android:layout_marginTop="15dp"
+  	    android:layout_below="@id/FavoriteDetailActivity_ISBN"
+		android:layout_above="@+id/FavoriteDetailActivity_Buecherei"
+        android:layout_alignLeft="@+id/FavoriteDetailActivity_Bild"
+        android:layout_alignRight="@+id/FavoriteDetailActivity_Buecherei"   
+        android:text="@string/description" 
+        android:maxLines="100"
+        android:scrollbars = "vertical"/>
+
     <Button
         android:id="@+id/FavoriteDetailActivity_Buecherei"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/FavoriteDetailActivity_Inhalt"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/FavoriteDetailActivity_Loeschen"
+        android:layout_marginBottom="20dp"
         android:gravity="top|bottom|left|center_vertical|center_horizontal"
-        android:text="@string/FavoriteDetailActivity_Buecherei" />
+        android:text="@string/nextLibrary" />
 
 </RelativeLayout>
