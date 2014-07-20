@@ -14,7 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp"
-        android:text="Scanner"
+        android:text="@string/scan"
         android:width="150dp" />
 
     <Button
@@ -24,7 +24,7 @@
         android:layout_alignLeft="@+id/searchActivity_scanner"
         android:layout_below="@+id/searchActivity_scanner"
         android:layout_marginTop="130dp"
-        android:text="Suchen"
+        android:text="@string/search"
         android:width="150dp" />
 
     <EditText
@@ -35,7 +35,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="63dp"
         android:ems="10"
-        android:width="300dp" >
+        android:width="300dp"
+        android:hint="@string/searchKeyword" >
 
         <requestFocus />
     </EditText>
