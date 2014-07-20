@@ -15,7 +15,6 @@
 	    android:layout_height="wrap_content"
 	    android:padding="3dip"
         android:layout_alignParentLeft="true"
-
 	    android:layout_marginRight="5dip" >
 
 	    <ImageView
@@ -69,6 +68,6 @@
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/thumbnail"
         android:text="@string/isbn"
-        android:textSize="1sp" />
+        android:textSize="10sp" />
 
 </RelativeLayout>
